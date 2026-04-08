@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learnove · online &amp; physical · unified university</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ══ LOADER ══════════════════════════════════════════════════════════════ */
+    #loader { position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%);background-size:400% 400%;animation:loaderBgShift 5s ease infinite; }
+    @keyframes loaderBgShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .loader-blob { position:absolute;border-radius:50%;filter:blur(90px);opacity:0;animation:blobAppear 1s ease forwards; }
+    .lb1{width:500px;height:500px;background:radial-gradient(circle,#f7c8e8,transparent);top:-100px;left:-120px;animation-delay:.1s}
+    .lb2{width:600px;height:600px;background:radial-gradient(circle,#c8d0f8,transparent);bottom:-150px;right:-150px;animation-delay:.2s}
+    .lb3{width:350px;height:350px;background:radial-gradient(circle,#e8c8f8,transparent);top:40%;left:45%;transform:translate(-50%,-50%);animation-delay:.15s}
+    @keyframes blobAppear { to { opacity:.55; } }
+    .loader-inner { position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:32px; }
+    .loader-logo-mark { opacity:0;transform:translateY(-160px) scale(.7);animation:logoFall .9s cubic-bezier(.34,1.4,.64,1) .5s forwards;filter:drop-shadow(0 16px 40px rgba(150,90,200,.35)); }
+    @keyframes logoFall { 0%{opacity:0;transform:translateY(-160px) scale(.7) rotate(-8deg)} 60%{opacity:1;transform:translateY(6px) scale(1.04) rotate(1.5deg)} 80%{transform:translateY(-4px) scale(.98) rotate(-.5deg)} 100%{opacity:1;transform:translateY(0) scale(1) rotate(0)} }
+    .loader-word { display:flex;gap:4px;align-items:flex-end; }
+    .loader-char { font-family:'Orbitron',sans-serif;font-size:clamp(2.2rem,8vw,4.2rem);font-weight:900;letter-spacing:2px;opacity:0;transform:translateY(-60px);background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5,#c090d8);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 16px rgba(150,90,200,.3));animation:charDrop .6s cubic-bezier(.34,1.56,.64,1) forwards; }
+    .loader-char:nth-child(1){animation-delay:1.4s}.loader-char:nth-child(2){animation-delay:1.55s}.loader-char:nth-child(3){animation-delay:1.70s}.loader-char:nth-child(4){animation-delay:1.85s}.loader-char:nth-child(5){animation-delay:2.00s}.loader-char:nth-child(6){animation-delay:2.15s}.loader-char:nth-child(7){animation-delay:2.30s}.loader-char:nth-child(8){animation-delay:2.45s}
+    @keyframes charDrop { 0%{opacity:0;transform:translateY(-60px) scaleY(.6)} 55%{opacity:1;transform:translateY(5px) scaleY(1.06)} 75%{transform:translateY(-3px) scaleY(.97)} 100%{opacity:1;transform:translateY(0) scaleY(1)} }
+    .loader-tagline { font-family:'Nunito',sans-serif;font-size:clamp(.75rem,2.5vw,1rem);font-weight:400;color:#4a2e6a;letter-spacing:4px;text-transform:uppercase;opacity:0;transform:translateY(10px);animation:taglineFade .8s ease 3.0s forwards; }
+    @keyframes taglineFade { to { opacity:.7;transform:translateY(0); } }
+    .loader-progress-wrap { width:clamp(180px,40vw,300px);height:3px;background:rgba(200,170,230,.25);border-radius:99px;overflow:hidden;opacity:0;animation:taglineFade .5s ease 2.8s forwards; }
+    .loader-progress-bar { height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#b06fd0,#80b8f0,#e08ed8);background-size:200% 100%;animation:progressFill 1.4s cubic-bezier(.4,0,.2,1) 3.1s forwards,shimmer 1.2s linear 3.1s infinite; }
+    @keyframes progressFill { 0%{width:0%} 100%{width:100%} }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    #loader.fade-out { animation:loaderFadeOut .85s cubic-bezier(.4,0,.2,1) forwards; }
+    @keyframes loaderFadeOut { 0%{opacity:1;transform:scale(1)} 60%{opacity:.4;transform:scale(1.015)} 100%{opacity:0;transform:scale(1.03);pointer-events:none} }
+    .loader-particles { position:absolute;inset:0;pointer-events:none;overflow:hidden; }
+    .particle { position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;animation:floatParticle linear infinite; }
+    @keyframes floatParticle { 0%{opacity:0;transform:translateY(0) scale(.5)} 10%{opacity:.7} 90%{opacity:.4} 100%{opacity:0;transform:translateY(-100vh) scale(1.2)} }
+    /* ══ MAIN SITE ═══════════════════════════════════════════════════════════ */
+    *{margin:0;padding:0;box-sizing:border-box}
+    #main-site { opacity:0;transition:opacity .6s ease .2s; }
+    #main-site.visible { opacity:1; }
+    body { font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%);min-height:100vh; }
+    .bg-blobs { position:fixed;inset:0;z-index:0;pointer-events:none; }
+    .blob { position:absolute;border-radius:50%;filter:blur(80px);opacity:.5; }
+    .blob-1{width:500px;height:500px;background:radial-gradient(circle,#f7c8e8,transparent);top:-100px;left:-100px}
+    .blob-2{width:600px;height:600px;background:radial-gradient(circle,#c8d0f8,transparent);bottom:-150px;right:-150px}
+    .blob-3{width:350px;height:350px;background:radial-gradient(circle,#e8c8f8,transparent);top:50%;left:50%;transform:translate(-50%,-50%)}
+    .glass { background:rgba(255,255,255,.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;border:1px solid rgba(255,255,255,.7);box-shadow:0 8px 32px rgba(180,150,200,.15); }
+    .container { position:relative;z-index:1;width:100%;height:100vh;overflow:hidden;display:grid;grid-template-columns:280px 1fr 280px;gap:16px;padding:20px; }
+    .left-panel { display:flex;flex-direction:column;gap:14px;height:100%; }
+    .panel-card { padding:18px;flex:1 1 0;min-height:0;display:flex;flex-direction:column;background:rgba(255,255,255,.3);backdrop-filter:blur(10px);border-radius:55px;border:1px solid rgba(255,255,255,.7);overflow:hidden; }
+    .card-label { font-size:.78rem;font-weight:700;color:#4a2e6a;letter-spacing:.4px;text-align:center;margin-bottom:10px;opacity:.85; }
+    .donut-area { flex:1;display:flex;align-items:center;justify-content:center;position:relative; }
+    .donut-svg { width:130px;height:130px;transform:rotate(-90deg); }
+    .donut-track { fill:none;stroke:rgba(200,170,230,.25);stroke-width:10; }
+    .donut-seg-purple { fill:none;stroke:url(#engGrad1);stroke-width:10;stroke-linecap:round;stroke-dasharray:0 251.2;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1); }
+    .donut-seg-teal { fill:none;stroke:url(#engGrad2);stroke-width:10;stroke-linecap:round;stroke-dasharray:0 251.2;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1) .15s; }
+    .donut-center { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center; }
+    .donut-pct { font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1; }
+    .donut-sub { font-size:.6rem;color:#7a5a9a;font-weight:600;opacity:.75;margin-top:2px; }
+    .engagement-metrics { display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;padding:0 4px; }
+    .metric-item { display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(255,255,255,.4);border-radius:14px;padding:6px 2px;border:1px solid rgba(255,255,255,.7);transition:all .25s; }
+    .metric-item:hover { background:rgba(220,180,250,.35);transform:translateY(-2px);box-shadow:0 4px 12px rgba(150,90,180,.2); }
+    .metric-icon { font-size:16px;line-height:1; }
+    .metric-label { font-size:.58rem;font-weight:600;color:#4a2e6a;opacity:.8;text-align:center;line-height:1.1; }
+    .metric-val { font-size:.65rem;font-weight:700;color:#7b3fa0; }
+    .gauge-area { flex:1;display:flex;align-items:center;justify-content:center;position:relative; }
+    .gauge-svg { width:110px;height:110px; }
+    .gauge-center { position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);display:flex;flex-direction:column;align-items:center; }
+    .gauge-val { font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;color:#4a2e6a;line-height:1; }
+    .gauge-unit { font-size:.6rem;color:#7a5a9a;font-weight:600;margin-top:1px; }
+    .dashboard-actions { display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 4px; }
+    .action-btn { display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:16px;transition:all .25s; }
+    .action-btn:hover { background:rgba(220,180,250,.4);transform:translateY(-2px);box-shadow:0 5px 14px rgba(150,90,180,.25); }
+    .action-icon { font-size:18px; }
+    .action-label { font-size:.6rem;font-weight:700;color:#4a2e6a;opacity:.85; }
+    .card-footer-label { text-align:center;font-size:.72rem;font-weight:700;color:#5a3a7a;letter-spacing:.5px;margin-top:8px;opacity:.7;text-transform:uppercase; }
+    .center-wrapper { position:relative;display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.45);backdrop-filter:blur(20px);border-radius:55px;border:1px solid rgba(255,255,255,.7); }
+    .center-panel { width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center; }
+    .notch-tray { position:absolute;top:-2px;left:50%;transform:translateX(-50%) scale(1.02);z-index:10;animation:pillGradientShift 3s infinite alternate;background-size:200% 200%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:5px 32px;border-radius:60px;display:flex;gap:40px;border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 28px rgba(170,130,200,.4);transition:all .3s ease; }
+    @keyframes pillGradientShift { 0%{background:linear-gradient(145deg,#f0d6e8,#e8d0f0,#d6c8f5)} 100%{background:linear-gradient(145deg,#d0e8f8,#f0d6e8,#e8d0f0)} }
+    .pill-icon { display:flex;align-items:center;justify-content:center;font-size:22px;color:white;font-weight:300;text-shadow:0 2px 6px rgba(0,0,0,.2);transition:all .3s ease;line-height:1;z-index:12; }
+    .pill-icon:hover { transform:scale(1.15); }
+    .nav-icon-box { width:70px;height:70px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:24px;color:#4a2e6a;backdrop-filter:blur(4px);transition:all .2s;cursor:default; }
+    .nav-icon-box span { font-size:.6rem;font-weight:600;color:#4a2e6a;opacity:.8;line-height:1; }
+    .nav-icon-box:hover { background:rgba(220,180,250,.4);transform:translateY(-2px); }
+    .center-content { width:100%;height:100%;display:flex;flex-direction:column;align-items:center;margin-top:72px; }
+    .image-container { display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin:10px 0; }
+    .centered-image { max-width:85%;max-height:55vh;object-fit:contain;transition:transform .3s ease; }
+    .centered-image:hover { transform:scale(1.02); }
+    .company-name { font-family:'Orbitron',sans-serif;font-size:2.6rem;font-weight:900;letter-spacing:6px;text-transform:uppercase;margin-top:24px;margin-bottom:8px;background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent; }
+    .tagline { font-size:1.1rem;font-weight:400;color:#2c1c38;text-align:center;line-height:1.6;max-width:80%;margin-bottom:16px;letter-spacing:.3px; }
+    .main-nav-row { display:flex;gap:28px;padding:10px 0;margin-bottom:10px; }
+    .right-panel { display:flex;flex-direction:column;gap:12px;height:100%; }
+    .right-pill { flex-shrink:0;background:rgba(255,255,255,.45);backdrop-filter:blur(20px);border-radius:60px;border:1px solid rgba(255,255,255,.8);box-shadow:0 6px 22px rgba(150,120,180,.25);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px; }
+    .pill-icons-group { display:flex;align-items:center;gap:20px; }
+    .pill-icons-group .icon-wrapper { display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(160,100,200,.7);border-radius:50%;transition:all .3s;cursor:default;border:1px solid rgba(255,255,255,.6);box-shadow:0 4px 12px rgba(130,80,170,.3); }
+    .pill-icons-group .icon-wrapper svg { width:26px;height:26px;stroke:white; }
+    .signup-pill { background:rgba(255,255,255,.4);border-radius:40px;padding:8px 22px;border:1px solid white;font-size:.95rem;font-weight:600;color:#2e1b3a;letter-spacing:.3px;backdrop-filter:blur(4px);white-space:nowrap;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px; }
+    .signup-pill:hover { background:rgba(255,255,255,.65);transform:translateY(-1px); }
+    .course-panel { flex:1;display:flex;flex-direction:column;background:rgba(255,255,255,.3);backdrop-filter:blur(4px);border-radius:55px;border:1px solid rgba(255,255,255,.6);overflow:hidden;padding:18px 14px 14px; }
+    .search-section { display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.7);border-radius:60px;margin-bottom:16px; }
+    .search-icon { font-size:18px;opacity:.6; }
+    .search-section input { background:transparent;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:.95rem;width:100%;color:#2c1c38; }
+    .search-section input::placeholder { color:rgba(44,28,56,.5);font-weight:300; }
+    .course-tab-row { display:flex;gap:8px;margin-bottom:16px; }
+    .course-tab { flex:1;padding:8px 0;border-radius:40px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.8);font-size:.85rem;font-weight:600;color:#2e1b3a;text-align:center;cursor:pointer;transition:all .2s; }
+    .course-tab.active { background:rgba(220,180,250,.7);border-color:white;box-shadow:0 4px 12px rgba(150,90,180,.3);color:#1f0f2e;font-weight:700;transform:scale(1.02); }
+    .course-list { flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;min-height:0;padding-right:2px; }
+    .course-item { display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:24px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7); }
+    .course-thumb { width:42px;height:42px;border-radius:14px;flex-shrink:0;background:rgba(200,160,230,.4);display:flex;align-items:center;justify-content:center;font-size:22px; }
+    .course-info { flex:1;min-width:0; }
+    .course-title { font-weight:700;font-size:.95rem;line-height:1.3;color:#2e1b3a;display:block; }
+    .course-meta { font-size:.7rem;opacity:.7;color:#2e1b3a;display:flex;gap:8px; }
+    .course-list::-webkit-scrollbar { width:4px; }
+    .course-list::-webkit-scrollbar-thumb { background:rgba(160,96,208,.3);border-radius:2px; }
+    .mobile-nav { display:none; }
+    @media (max-width:1023px) {
+      .container{height:auto;overflow:visible;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:14px;padding:16px}
+      .center-wrapper{grid-column:1/-1;grid-row:1;border-radius:32px;min-height:380px}
+      .left-panel{grid-column:1;grid-row:2;height:auto;flex-direction:row;gap:12px}
+      .panel-card{flex:1 1 0;border-radius:28px;padding:14px}
+      .right-panel{grid-column:2;grid-row:2;height:auto}
+      .course-panel{border-radius:28px;max-height:420px}
+      .center-content{margin-top:62px}
+      .company-name{font-size:2rem;letter-spacing:4px}
+      .tagline{font-size:.95rem}
+      .centered-image{max-height:38vh}
+      .main-nav-row{gap:16px}
+      .donut-svg{width:110px;height:110px}
+      .donut-pct{font-size:1.4rem}
+      .gauge-svg{width:95px;height:95px}
+      .gauge-val{font-size:1.2rem}
+      .engagement-metrics{grid-template-columns:repeat(2,1fr)}
+      body{padding-bottom:74px}
+      .mobile-nav{display:flex;position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:100;width:calc(100% - 24px);max-width:480px;background:rgba(255,255,255,.55);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.85);border-radius:60px;box-shadow:0 8px 32px rgba(160,120,200,.25);padding:6px 10px;justify-content:space-around;align-items:center}
+      .mobile-nav .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 18px;border-radius:50px;text-decoration:none;font-size:.65rem;font-weight:700;color:#7a5a9a;transition:all .25s}
+      .mobile-nav .nav-item span{font-size:20px;line-height:1}
+      .mobile-nav .nav-item.active{background:linear-gradient(135deg,rgba(220,180,250,.6),rgba(190,200,255,.5));border:1px solid rgba(255,255,255,.9);color:#3a1a5a;box-shadow:0 4px 14px rgba(150,90,180,.25)}
+    }
+    @media (max-width:599px) {
+      body{overflow-x:hidden}
+      .container{display:flex;flex-direction:column;gap:12px;padding:12px}
+      .center-wrapper{border-radius:28px}
+      .center-content{margin-top:56px}
+      .notch-tray{padding:4px 18px;gap:20px}
+      .pill-icon{font-size:18px}
+      .main-nav-row{gap:10px;flex-wrap:wrap}
+      .centered-image{max-height:30vh;max-width:90%}
+      .company-name{font-size:1.6rem;letter-spacing:3px;margin-top:12px;margin-bottom:6px}
+      .tagline{font-size:.85rem;max-width:92%}
+      .left-panel{flex-direction:row;gap:10px}
+      .panel-card{flex:1 1 0;border-radius:24px;padding:12px 10px}
+      .donut-svg{width:90px;height:90px}
+      .donut-pct{font-size:1.1rem}
+      .engagement-metrics{grid-template-columns:repeat(2,1fr);gap:4px;margin-top:6px}
+      .gauge-svg{width:88px;height:88px}
+      .gauge-val{font-size:1.1rem}
+      .right-pill{border-radius:40px;padding:10px 16px}
+      .signup-pill{padding:7px 14px;font-size:.82rem}
+      .course-panel{border-radius:24px;max-height:420px}
+    }
+    /* ══ MODAL ═══════════════════════════════════════════════════════════════ */
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,10,50,.6);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center;padding:16px}
+    .modal.show{display:flex;animation:modalIn .35s cubic-bezier(.34,1.3,.64,1)}
+    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .modal-content{width:100%;max-width:540px;max-height:92vh;overflow-y:auto;overflow-x:hidden;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(248,244,255,.97));border:1px solid rgba(255,255,255,.9);box-shadow:0 32px 80px rgba(80,20,120,.25),0 0 0 1px rgba(176,111,208,.1);padding:36px 32px 28px;position:relative;scrollbar-width:thin}
+    .modal-content::-webkit-scrollbar{width:4px}
+    .modal-content::-webkit-scrollbar-thumb{background:rgba(176,111,208,.3);border-radius:2px}
+    .close-modal{position:absolute;top:18px;right:22px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;color:#6a4a8a;background:rgba(176,111,208,.1);border-radius:50%;border:1px solid rgba(176,111,208,.15);transition:all .2s;line-height:1}
+    .close-modal:hover{background:rgba(176,111,208,.2);transform:scale(1.1)}
+    .modal-header{text-align:center;margin-bottom:24px}
+    .modal-logo{width:56px;height:56px;object-fit:contain;margin-bottom:12px}
+    .modal-header h2{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:#321d47;margin-bottom:4px}
+    .modal-header p{color:#7a5a9a;font-size:.88rem}
+    .auth-tabs{display:flex;gap:6px;margin-bottom:24px;background:rgba(200,170,230,.12);border-radius:40px;padding:4px}
+    .auth-tab{flex:1;padding:10px 16px;background:none;border:none;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;color:#7a5a9a;cursor:pointer;border-radius:36px;transition:all .25s}
+    .auth-tab.active{background:white;color:#321d47;box-shadow:0 2px 12px rgba(176,111,208,.2)}
+    .account-type-tabs{display:flex;gap:10px;margin-bottom:20px}
+    .account-type-tab{flex:1;padding:14px 10px;border-radius:16px;border:2px solid rgba(200,170,230,.3);background:white;cursor:pointer;text-align:center;transition:all .25s;font-family:'Nunito',sans-serif}
+    .account-type-tab:hover{border-color:rgba(176,111,208,.5)}
+    .account-type-tab.active{border-color:#b06fd0;background:linear-gradient(135deg,rgba(176,111,208,.08),rgba(128,184,240,.08));box-shadow:0 4px 16px rgba(176,111,208,.15)}
+    .acc-tab-icon{font-size:1.6rem;margin-bottom:4px}
+    .acc-tab-label{font-size:.85rem;font-weight:700;color:#321d47}
+    .acc-tab-desc{font-size:.72rem;color:#7a5a9a;margin-top:2px}
+    .account-type-section{display:none;animation:slideIn .3s ease}
+    .account-type-section.active{display:block}
+    @keyframes slideIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+    .auth-form{display:none}
+    .auth-form.active{display:block;animation:slideIn .3s ease}
+    .avatar-upload-section{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:rgba(200,170,230,.06);border:2px dashed rgba(176,111,208,.25);border-radius:16px}
+    #avatarUploadArea{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(176,111,208,.15),rgba(128,184,240,.15));border:2px dashed rgba(176,111,208,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0;transition:all .2s}
+    #avatarUploadArea:hover{border-color:#b06fd0}
+    #avatarPlaceholder{display:flex;flex-direction:column;align-items:center;gap:2px}
+    #avatarPlaceholder span:first-child{font-size:1.4rem}
+    #avatarPlaceholder span:last-child{font-size:.55rem;color:#7a5a9a;font-weight:600}
+    #avatarPreview{width:100%;height:100%;object-fit:cover;display:none}
+    .avatar-info h4{font-size:.88rem;font-weight:700;color:#321d47;margin-bottom:2px}
+    .avatar-info p{font-size:.75rem;color:#7a5a9a}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;margin-bottom:6px;color:#4a2e6a;font-weight:700;font-size:.85rem}
+    .form-group label .required{color:#e05a8a;margin-left:2px}
+    .form-group input,.form-group select{width:100%;padding:11px 14px;border:2px solid rgba(200,170,230,.3);border-radius:12px;font-family:'Nunito',sans-serif;font-size:.93rem;background:white;color:#321d47;transition:all .2s;outline:none}
+    .form-group input:focus,.form-group select:focus{border-color:#b06fd0;box-shadow:0 0 0 4px rgba(176,111,208,.08)}
+    .form-group input.error{border-color:#e05a8a}
+    .field-error{font-size:.75rem;color:#e05a8a;margin-top:4px;min-height:16px;display:block}
+    .password-wrapper{position:relative}
+    .password-wrapper input{padding-right:42px}
+    .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#7a5a9a;font-size:1rem;padding:4px;line-height:1}
+    .password-strength{margin-top:6px}
+    .strength-bar-wrap{height:4px;background:rgba(200,170,230,.2);border-radius:4px;overflow:hidden;margin-bottom:3px}
+    #passwordStrengthBar{height:100%;width:0;border-radius:4px;transition:all .3s}
+    #passwordStrengthLabel{font-size:.72rem;font-weight:700}
+    .section-label{font-size:.85rem;font-weight:700;color:#4a2e6a;margin-bottom:10px}
+    .interests-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .interest-chip{display:flex;align-items:center;gap:6px;padding:8px 10px;background:white;border:2px solid rgba(200,170,230,.25);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.8rem;font-weight:600;color:#4a2e6a}
+    .interest-chip:hover{border-color:#b06fd0}
+    .interest-chip input[type="checkbox"]{display:none}
+    .interest-chip.selected{border-color:#b06fd0;background:linear-gradient(135deg,rgba(176,111,208,.1),rgba(128,184,240,.1))}
+    .interest-chip .chip-icon{font-size:1rem}
+    .terms-group{margin:16px 0}
+    .checkbox-label{display:flex;align-items:flex-start;gap:10px;font-size:.86rem;color:#4a2e6a;cursor:pointer;line-height:1.4}
+    .checkbox-label input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:#b06fd0;cursor:pointer}
+    .checkbox-label a{color:#b06fd0;text-decoration:none;font-weight:700}
+    .login-options{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .remember-label{display:flex;align-items:center;gap:8px;font-size:.86rem;color:#4a2e6a;cursor:pointer}
+    .remember-label input{accent-color:#b06fd0}
+    .forgot-link{font-size:.86rem;color:#b06fd0;font-weight:700;text-decoration:none;cursor:pointer;background:none;border:none;font-family:inherit}
+    .forgot-link:hover{text-decoration:underline}
+    .submit-btn{width:100%;padding:14px;margin-top:4px;background:linear-gradient(135deg,#b06fd0,#8090e0,#80b8f0);background-size:200% 100%;border:none;border-radius:30px;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;letter-spacing:.5px}
+    .submit-btn:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 10px 28px rgba(176,111,208,.4)}
+    .submit-btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+    .loading-spinner{display:none;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .divider{display:flex;align-items:center;gap:12px;margin:20px 0 16px}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(200,170,230,.35)}
+    .divider span{font-size:.8rem;color:#7a5a9a;font-weight:600;white-space:nowrap}
+    .social-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .social-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border:2px solid rgba(200,170,230,.3);border-radius:24px;background:white;font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;color:#321d47;cursor:pointer;transition:all .2s}
+    .social-btn:hover{border-color:#b06fd0;transform:translateY(-1px);box-shadow:0 4px 12px rgba(176,111,208,.15)}
+    .social-btn svg{width:18px;height:18px;flex-shrink:0}
+    .switch-form{text-align:center;margin-top:16px;font-size:.86rem;color:#7a5a9a}
+    .switch-form a{color:#b06fd0;font-weight:700;text-decoration:none;cursor:pointer}
+    .toast{position:fixed;bottom:24px;right:24px;min-width:260px;max-width:380px;padding:14px 20px;background:white;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.18);font-family:'Nunito',sans-serif;font-size:.9rem;color:#321d47;display:flex;align-items:center;gap:12px;transform:translateY(100px);opacity:0;transition:all .35s cubic-bezier(.34,1.3,.64,1);border-left:4px solid #b06fd0;z-index:20000}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.success{border-left-color:#43a047}
+    .toast.error{border-left-color:#e53935}
+    .toast.warning{border-left-color:#fb8c00}
+    .toast-icon{font-size:1.1rem;flex-shrink:0}
+    .toast-message{flex:1}
+    .toast-close{margin-left:auto;background:none;border:none;color:#7a5a9a;cursor:pointer;font-size:1rem;padding:2px 4px;flex-shrink:0}
+    img.emoji{height:1em;width:1em;vertical-align:-.1em}
+    @media(max-width:600px){
+      .modal-content{padding:24px 18px 20px}
+      .form-row{grid-template-columns:1fr;gap:0}
+      .interests-grid{grid-template-columns:repeat(2,1fr)}
+      .social-buttons{grid-template-columns:1fr}
+      .account-type-tabs{flex-direction:column;gap:8px}
+      .toast{bottom:90px;right:12px;left:12px;max-width:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ LOADER ════════════════════════════════════════════════════════════════ -->
+<div id="loader">
+  <div class="loader-blob lb1"></div>
+  <div class="loader-blob lb2"></div>
+  <div class="loader-blob lb3"></div>
+  <div class="loader-particles" id="loaderParticles"></div>
+  <div class="loader-inner">
+    <div class="loader-logo-mark">
+      <img src="Logo.png" alt="Learnove Logo" style="width:100px;height:100px;object-fit:contain;">
+    </div>
+    <div>
+      <div class="loader-word">
+        <span class="loader-char">L</span><span class="loader-char">E</span><span class="loader-char">A</span>
+        <span class="loader-char">R</span><span class="loader-char">N</span><span class="loader-char">O</span>
+        <span class="loader-char">V</span><span class="loader-char">E</span>
+      </div>
+      <div class="loader-tagline">online &amp; physical · unified university</div>
+    </div>
+    <div class="loader-progress-wrap"><div class="loader-progress-bar"></div></div>
+  </div>
+</div>
+
+<!-- ══ MAIN SITE ══════════════════════════════════════════════════════════════ -->
+<div id="main-site">
+<div class="bg-blobs">
+  <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+</div>
+
+<div class="container">
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="panel-card">
+      <div class="card-label">Student Engagement Index</div>
+      <div class="donut-area">
+        <svg class="donut-svg" viewBox="0 0 90 90">
+          <defs>
+            <linearGradient id="engGrad1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b06fd0"/><stop offset="100%" stop-color="#e08ed8"/></linearGradient>
+            <linearGradient id="engGrad2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#70c8d8"/><stop offset="100%" stop-color="#80e0c0"/></linearGradient>
+          </defs>
+          <circle class="donut-track" cx="45" cy="45" r="36"/>
+          <circle class="donut-seg-purple" id="arcPurple" cx="45" cy="45" r="36"/>
+          <circle class="donut-seg-teal" id="arcTeal" cx="45" cy="45" r="36"/>
+        </svg>
+        <div class="donut-center"><div class="donut-pct" id="engPct">0%</div><div class="donut-sub">overall</div></div>
+      </div>
+      <div class="engagement-metrics">
+        <div class="metric-item"><div class="metric-icon">📅</div><div class="metric-label">Attendance</div><div class="metric-val">88%</div></div>
+        <div class="metric-item"><div class="metric-icon">🙋</div><div class="metric-label">Participation</div><div class="metric-val">74%</div></div>
+        <div class="metric-item"><div class="metric-icon">📝</div><div class="metric-label">Grades</div><div class="metric-val">B+</div></div>
+        <div class="metric-item"><div class="metric-icon">⚡</div><div class="metric-label">Activities</div><div class="metric-val">12</div></div>
+      </div>
+    </div>
+    <div class="panel-card">
+      <div class="card-label">Personalized Study Target</div>
+      <div class="gauge-area">
+        <svg class="gauge-svg" viewBox="0 0 110 110">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c8a0f0"/><stop offset="100%" stop-color="#80b8f0"/></linearGradient>
+            <radialGradient id="gaugeCircleGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="100%" stop-color="rgba(230,215,250,0.6)"/></radialGradient>
+          </defs>
+          <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(180,150,220,0.2)" stroke-width="1.5" stroke-dasharray="3 5"/>
+          <path d="M 14 75 A 41 41 0 1 1 96 75" fill="none" stroke="rgba(200,170,230,0.25)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 14 75 A 41 41 0 1 1 96 75" fill="none" stroke="url(#gaugeGrad)" stroke-width="8" stroke-linecap="round" id="gaugeFill" stroke-dasharray="0 200" style="transition:stroke-dasharray 1.6s cubic-bezier(0.34,1.3,0.64,1)"/>
+          <circle cx="55" cy="55" r="32" fill="url(#gaugeCircleGrad)" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+          <g id="gaugeNeedle" style="transform-origin:55px 55px;transform:rotate(-100deg);transition:transform 1.6s cubic-bezier(0.34,1.56,0.64,1)">
+            <line x1="55" y1="55" x2="55" y2="26" stroke="#a060d0" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="55" cy="55" r="5" fill="#a060d0" stroke="white" stroke-width="1.5"/>
+          </g>
+          <circle cx="88" cy="28" r="5" fill="#a060d0" opacity="0.85"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle>
+        </svg>
+        <div class="gauge-center"><div class="gauge-val" id="gaugeVal">0</div><div class="gauge-unit">hrs/week</div></div>
+      </div>
+      <div class="dashboard-actions">
+        <div class="action-btn"><div class="action-icon">📋</div><div class="action-label">Exams</div></div>
+        <div class="action-btn"><div class="action-icon">📁</div><div class="action-label">Projects</div></div>
+        <div class="action-btn"><div class="action-icon">⏰</div><div class="action-label">Deadlines</div></div>
+      </div>
+      <div class="card-footer-label">School Dashboard</div>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center-wrapper glass">
+    <div class="center-panel">
+      <div class="notch-tray">
+        <div class="pill-icon">⌂</div><div class="pill-icon">◊</div><div class="pill-icon">☀</div><div class="pill-icon">◉</div>
+      </div>
+      <div class="center-content">
+        <div class="main-nav-row">
+          <div class="nav-icon-box">✎<span>Library</span></div>
+          <div class="nav-icon-box">⚛<span>Science</span></div>
+          <div class="nav-icon-box">☀<span>Campus</span></div>
+          <div class="nav-icon-box">◉<span>Events</span></div>
+        </div>
+        <div class="image-container">
+          <img src="centered-img.avif" alt="Learnove" class="centered-image">
+          <div class="company-name">LEARNOVE</div>
+          <div class="tagline">From campus to cloud. Transition from physical lectures to a global online university.<br>anytime · anywhere · accredited</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="right-pill">
+      <div class="pill-icons-group">
+        <div class="icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"/></svg>
+        </div>
+        <div class="icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"/></svg>
+        </div>
+      </div>
+      <div class="signup-pill" id="signupPillBtn" role="button" tabindex="0">
+        <span class="signup-pill-text">Sign up ›</span>
+      </div>
+    </div>
+
+    <div class="course-panel glass">
+      <div class="search-section">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search courses, subjects..." id="courseSearchInput" autocomplete="off">
+      </div>
+      <div class="course-tab-row">
+        <div class="course-tab active" data-tab="secondary">secondary</div>
+        <div class="course-tab" data-tab="university">university</div>
+        <div class="course-tab" data-tab="skill">skill</div>
+      </div>
+      <div class="course-list" id="courseListContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav">
+  <a href="#" class="nav-item active" onclick="setActiveNav(this);return false"><span>⌂</span>Home</a>
+  <a href="#" class="nav-item" onclick="setActiveNav(this);return false"><span>📚</span>Courses</a>
+  <a href="#" class="nav-item" onclick="setActiveNav(this);return false"><span>📊</span>Dashboard</a>
+  <a href="#" class="nav-item" onclick="showModal('login');return false"><span>👤</span>Profile</a>
+</nav>
+</div><!-- #main-site -->
+
+<!-- ══ AUTH MODAL ════════════════════════════════════════════════════════════ -->
+<div id="signupModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <button class="close-modal" aria-label="Close">✕</button>
+
+    <div class="modal-header">
+      <img src="Logo.png" alt="Learnove" class="modal-logo">
+      <h2 id="modalTitle">Join Learnove</h2>
+      <p>From campus to cloud — start your journey today</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="signup">Create Account</button>
+      <button class="auth-tab" data-tab="login">Sign In</button>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <form id="signupForm" class="auth-form active" novalidate style="display:block">
+      <input type="hidden" id="accountTypeInput" value="individual">
+      <div class="account-type-tabs">
+        <div class="account-type-tab active" data-type="individual">
+          <div class="acc-tab-icon">🧑‍💼</div>
+          <div class="acc-tab-label">Individual</div>
+          <div class="acc-tab-desc">Learner or professional</div>
+        </div>
+        <div class="account-type-tab" data-type="student">
+          <div class="acc-tab-icon">🎓</div>
+          <div class="acc-tab-label">Student</div>
+          <div class="acc-tab-desc">Enrolled or applying</div>
+        </div>
+      </div>
+      <div class="avatar-upload-section">
+        <div id="avatarUploadArea" role="button" tabindex="0" aria-label="Upload profile photo">
+          <div id="avatarPlaceholder"><span>📷</span><span>Upload</span></div>
+          <img id="avatarPreview" alt="Your photo">
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none">
+        <div class="avatar-info">
+          <h4>Profile Photo</h4>
+          <p>Click to upload your photo<br>JPG, PNG · max 2MB</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="signupName">Full Name <span class="required">*</span></label>
+        <input type="text" id="signupName" placeholder="Your full name" autocomplete="name" required>
+        <span class="field-error" id="nameError"></span>
+      </div>
+      <div class="form-group">
+        <label for="signupEmail">Email Address <span class="required">*</span></label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required>
+        <span class="field-error" id="emailError"></span>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="signupPassword">Password <span class="required">*</span></label>
+          <div class="password-wrapper">
+            <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" required>
+            <button type="button" class="pw-toggle" data-target="signupPassword">👁</button>
+          </div>
+          <div class="password-strength">
+            <div class="strength-bar-wrap"><div id="passwordStrengthBar"></div></div>
+            <span id="passwordStrengthLabel"></span>
+          </div>
+          <span class="field-error" id="passwordError"></span>
+        </div>
+        <div class="form-group">
+          <label for="signupConfirmPassword">Confirm Password <span class="required">*</span></label>
+          <div class="password-wrapper">
+            <input type="password" id="signupConfirmPassword" placeholder="Repeat password" autocomplete="new-password" required>
+            <button type="button" class="pw-toggle" data-target="signupConfirmPassword">👁</button>
+          </div>
+          <span class="field-error" id="confirmPasswordError"></span>
+        </div>
+      </div>
+      <div class="account-type-section" data-type="student">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="educationLevel">Education Level</label>
+            <select id="educationLevel">
+              <option value="">Select level</option>
+              <option value="secondary">Secondary School</option>
+              <option value="university">University (Undergraduate)</option>
+              <option value="graduate">Graduate / Postgraduate</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="graduationYear">Expected Graduation</label>
+            <select id="graduationYear"><option value="">Select year</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="institution">Institution / School</label>
+            <input type="text" id="institution" placeholder="University of Lagos">
+          </div>
+          <div class="form-group">
+            <label for="major">Field of Study / Major</label>
+            <input type="text" id="major" placeholder="Computer Science">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="section-label">Interests <span style="font-weight:400;color:#7a5a9a;font-size:0.78rem">(select all that apply)</span></div>
+        <div class="interests-grid">
+          <label class="interest-chip"><input type="checkbox" name="interests" value="programming"><span class="chip-icon">💻</span> Programming</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="science"><span class="chip-icon">🔬</span> Science</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="business"><span class="chip-icon">📊</span> Business</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="arts"><span class="chip-icon">🎨</span> Arts</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="languages"><span class="chip-icon">🌍</span> Languages</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="engineering"><span class="chip-icon">⚙️</span> Engineering</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="medicine"><span class="chip-icon">🩺</span> Medicine</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="law"><span class="chip-icon">⚖️</span> Law</label>
+          <label class="interest-chip"><input type="checkbox" name="interests" value="design"><span class="chip-icon">✏️</span> Design</label>
+        </div>
+      </div>
+      <div class="terms-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="termsAgree" required>
+          <span>I agree to Learnove's <a href="/pages/terms.html" target="_blank">Terms of Service</a> and <a href="/pages/privacy.html" target="_blank">Privacy Policy</a></span>
+        </label>
+      </div>
+      <button type="submit" class="submit-btn" id="signupSubmit">
+        <span class="btn-text">Create My Account</span>
+        <span class="loading-spinner">⟳</span>
+      </button>
+      <div class="divider"><span>or continue with</span></div>
+      <div class="social-buttons">
+        <button type="button" class="social-btn" onclick="socialLogin('google')">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Google
+        </button>
+        <button type="button" class="social-btn" onclick="socialLogin('github')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z" fill="#24292e"/></svg>
+          GitHub
+        </button>
+      </div>
+      <div class="switch-form">Already have an account? <a onclick="switchAuthTab('login')">Sign in</a></div>
+    </form>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="auth-form" novalidate style="display:none">
+      <div class="form-group">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password" required>
+          <button type="button" class="pw-toggle" data-target="loginPassword">👁</button>
+        </div>
+      </div>
+      <div class="login-options">
+        <label class="remember-label">
+          <input type="checkbox" id="rememberMe"> Remember me
+        </label>
+        <button type="button" class="forgot-link" id="forgotPasswordBtn">Forgot password?</button>
+      </div>
+      <button type="submit" class="submit-btn" id="loginSubmit">
+        <span class="btn-text">Sign In</span>
+        <span class="loading-spinner">⟳</span>
+      </button>
+      <div class="divider"><span>or continue with</span></div>
+      <div class="social-buttons">
+        <button type="button" class="social-btn" onclick="socialLogin('google')">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Google
+        </button>
+        <button type="button" class="social-btn" onclick="socialLogin('github')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z" fill="#24292e"/></svg>
+          GitHub
+        </button>
+      </div>
+      <div class="switch-form">Don't have an account? <a onclick="switchAuthTab('signup')">Create one free</a></div>
+    </form>
+
+    <!-- FORGOT PASSWORD FORM -->
+    <form id="forgotPasswordForm" class="auth-form" novalidate style="display:none">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="font-size:2.5rem;margin-bottom:8px;">🔐</div>
+        <h3 style="color:#321d47;font-size:1.1rem;margin-bottom:6px;">Forgot your password?</h3>
+        <p style="color:#7a5a9a;font-size:0.88rem;">Enter your email and we'll send you a secure reset link.</p>
+      </div>
+      <div class="form-group">
+        <label for="forgotEmail">Email Address</label>
+        <input type="email" id="forgotEmail" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <button type="submit" class="submit-btn" id="forgotSubmit">
+        <span class="btn-text">Send Reset Link</span>
+        <span class="loading-spinner">⟳</span>
+      </button>
+      <div class="switch-form" style="margin-top:14px"><a onclick="switchAuthTab('login')">← Back to sign in</a></div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast" role="alert" aria-live="polite">
+  <span class="toast-icon"></span>
+  <span class="toast-message"></span>
+  <button class="toast-close" onclick="document.getElementById('toast').classList.remove('show')">✕</button>
+</div>
+
+<!-- Loader script (inline, no module needed) -->
+<script>
+(function() {
+  const el = document.getElementById('loaderParticles');
+  const colors = ['#e8c0f8','#c0d8f8','#f8d0e8','#d0c8f8','#c8e8f8','#f0c8d8'];
+  for (let i = 0; i < 24; i++) {
+    const p = document.createElement('div'); p.className = 'particle';
+    const s = 4 + Math.random() * 8;
+    p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${60+Math.random()*40}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*3}s;`;
+    el.appendChild(p);
+  }
+
+  setTimeout(() => {
+    const loader = document.getElementById('loader');
+    const main   = document.getElementById('main-site');
+    loader.classList.add('fade-out');
+    setTimeout(() => { main.classList.add('visible'); }, 300);
+    setTimeout(() => {
+      loader.style.display = 'none';
+      initMainSite();
+      const action = new URLSearchParams(window.location.search).get('action');
+      if (action === 'login')  window.showModal && window.showModal('login');
+      if (action === 'signup') window.showModal && window.showModal('signup');
+    }, 900);
+  }, 5000);
+
+  function initMainSite() {
+    // Graduation year dropdown
+    const sel = document.getElementById('graduationYear');
+    if (sel) {
+      const yr = new Date().getFullYear();
+      for (let y = yr; y <= yr + 8; y++) {
+        const opt = document.createElement('option');
+        opt.value = y; opt.textContent = y;
+        sel.appendChild(opt);
+      }
+    }
+    // Donut chart animation
+    (function() {
+      const circum = 2 * Math.PI * 36, pct = 70;
+      setTimeout(() => {
+        let c = 0;
+        const step = () => { if (c < pct) { c++; document.getElementById('engPct').textContent = c + '%'; requestAnimationFrame(step); } };
+        requestAnimationFrame(step);
+        const pLen = circum * 0.70, tLen = circum * 0.15, gap = circum * 0.05;
+        document.getElementById('arcPurple').style.strokeDasharray = `${pLen} ${circum - pLen}`;
+        document.getElementById('arcTeal').style.strokeDasharray   = `${tLen} ${circum - tLen}`;
+        document.getElementById('arcTeal').style.strokeDashoffset  = `${-(pLen + gap)}`;
+      }, 300);
+    })();
+    // Gauge animation
+    (function() {
+      const target = 24, ratio = 0.68, arcTotal = 200;
+      setTimeout(() => {
+        document.getElementById('gaugeNeedle').style.transform = `rotate(${-100 + ratio * 180}deg)`;
+        document.getElementById('gaugeFill').style.strokeDasharray = `${arcTotal * ratio} ${arcTotal}`;
+        let c = 0;
+        const step = () => { if (c < target) { c++; document.getElementById('gaugeVal').textContent = c; requestAnimationFrame(step); } };
+        requestAnimationFrame(step);
+      }, 400);
+    })();
+    // Course list
+    (function() {
+      const db = {
+        secondary: [
+          {title:'Mathematics (GCSE)',thumb:'📐',level:'ages 14–16',type:'core'},
+          {title:'Physical Sciences',thumb:'⚗️',level:'IGCSE',type:'lab'},
+          {title:'English Literature',thumb:'📖',level:'high school',type:'humanities'},
+          {title:'History (modern)',thumb:'🏛️',level:'secondary',type:'elective'},
+          {title:'Computer literacy',thumb:'💻',level:'foundation',type:'skills'},
+          {title:'French beginner',thumb:'🇫🇷',level:'A2',type:'language'},
+          {title:'Art & design',thumb:'🎨',level:'GCSE',type:'creative'}
+        ],
+        university: [
+          {title:'BSc Computer Science',thumb:'⌨️',level:'undergrad',type:'STEM'},
+          {title:'Business Administration',thumb:'📊',level:'BBA',type:'management'},
+          {title:'Medicine (pre-clinical)',thumb:'🩺',level:'year 1-2',type:'health'},
+          {title:'Psychology 101',thumb:'🧠',level:'intro',type:'social'},
+          {title:'Engineering mathematics',thumb:'⚙️',level:'bachelor',type:'engineering'},
+          {title:'International Law',thumb:'⚖️',level:'LLB',type:'law'},
+          {title:'Economics (micro)',thumb:'📈',level:'core',type:'economics'}
+        ],
+        skill: [
+          {title:'Web development bootcamp',thumb:'🌐',level:'beginner',type:'tech'},
+          {title:'Data analysis with Python',thumb:'🐍',level:'intermediate',type:'data'},
+          {title:'Graphic design',thumb:'🖌️',level:'Canva/Adobe',type:'creative'},
+          {title:'Digital marketing',thumb:'📱',level:'SEO/SEM',type:'business'},
+          {title:'Public speaking',thumb:'🎤',level:'confidence',type:'soft skill'},
+          {title:'Photography basics',thumb:'📸',level:'beginner',type:'art'},
+          {title:'Project management',thumb:'📋',level:'PMP prep',type:'certification'}
+        ]
+      };
+      let activeTab = 'secondary';
+      const tabs   = document.querySelectorAll('.course-tab');
+      const listEl = document.getElementById('courseListContainer');
+      const srchEl = document.getElementById('courseSearchInput');
+      function render() {
+        const q = srchEl.value.trim().toLowerCase();
+        const courses = (db[activeTab]||[]).filter(c => !q || [c.title,c.level,c.type].some(f=>f.toLowerCase().includes(q)));
+        listEl.innerHTML = courses.length
+          ? courses.map(c=>`<div class="course-item"><div class="course-thumb">${c.thumb}</div><div class="course-info"><span class="course-title">${c.title}</span><span class="course-meta">${c.level} · ${c.type}</span></div></div>`).join('')
+          : '<div style="padding:20px;text-align:center;opacity:.7">✨ No matching courses</div>';
+      }
+      tabs.forEach(t => t.addEventListener('click', () => {
+        activeTab = t.dataset.tab;
+        tabs.forEach(x => x.classList.toggle('active', x===t));
+        render();
+      }));
+      srchEl.addEventListener('input', render);
+      render();
+    })();
+  }
+
+  window.setActiveNav = function(el) {
+    document.querySelectorAll('.mobile-nav .nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  };
+})();
+</script>
+
+<!-- Auth module — loads auth.js which initialises Supabase -->
+<script type="module" src="js/auth.js"></script>
+
+<!-- Twemoji for consistent emoji rendering -->
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+function renderEmojis(t=document.body){twemoji.parse(t,{folder:'svg',ext:'.svg'})}
+renderEmojis();
+new MutationObserver(m=>m.forEach(x=>x.addedNodes.forEach(n=>{if(n.nodeType===1||n.nodeType===3)renderEmojis(n)}))).observe(document.body,{childList:true,subtree:true});
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verify Email · Learnove</title>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Nunito',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+      background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%)}
+    .blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.5;pointer-events:none}
+    .blob-1{width:500px;height:500px;background:radial-gradient(circle,#f7c8e8,transparent);top:-100px;left:-100px}
+    .blob-2{width:600px;height:600px;background:radial-gradient(circle,#c8d0f8,transparent);bottom:-150px;right:-150px}
+    .card{position:relative;z-index:1;max-width:480px;width:100%;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,.9);box-shadow:0 32px 80px rgba(80,20,120,.2);padding:48px 40px;text-align:center}
+    .logo{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:4px;background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px}
+    .icon{font-size:3.5rem;margin:20px 0;display:block}
+    h1{font-family:'Orbitron',sans-serif;font-size:1.3rem;color:#321d47;margin-bottom:12px}
+    p{color:#5a4a6a;line-height:1.7;margin-bottom:16px;font-size:.95rem}
+    .status-box{border-radius:14px;padding:16px 20px;margin:20px 0;font-weight:600;font-size:.9rem}
+    .status-loading{background:rgba(200,170,230,.15);border:1px solid rgba(176,111,208,.3);color:#6b3f8c}
+    .status-success{background:rgba(67,160,71,.1);border:1px solid rgba(67,160,71,.3);color:#2e7d32}
+    .status-error{background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:#c62828}
+    .btn{display:inline-block;padding:14px 36px;background:linear-gradient(135deg,#b06fd0,#80b8f0);color:white;text-decoration:none;border-radius:30px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:.5px;margin-top:8px;transition:all .3s;border:none;cursor:pointer}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(176,111,208,.4)}
+    .spinner{display:inline-block;width:28px;height:28px;border:3px solid rgba(176,111,208,.3);border-top-color:#b06fd0;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:8px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .confetti{font-size:2rem;display:block;margin-bottom:8px;animation:bounce .6s ease infinite alternate}
+    @keyframes bounce{to{transform:scale(1.2)}}
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="card">
+    <div class="logo">LEARNOVE</div>
+    <span class="icon" id="statusIcon">🔐</span>
+    <h1 id="statusTitle">Verifying your email…</h1>
+    <div class="status-box status-loading" id="statusBox">
+      <div class="spinner"></div><br>
+      Please wait while we verify your email address.
+    </div>
+    <p id="statusMsg"></p>
+    <div id="actionArea"></div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { SUPABASE_URL, SUPABASE_ANON_KEY, API_URL } from '../js/supabase-config.js';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        storage: sessionStorage,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true   // ← picks up the ?token=... or #access_token=... from email link
+      }
+    });
+
+    const iconEl  = document.getElementById('statusIcon');
+    const titleEl = document.getElementById('statusTitle');
+    const boxEl   = document.getElementById('statusBox');
+    const msgEl   = document.getElementById('statusMsg');
+    const actEl   = document.getElementById('actionArea');
+
+    function showSuccess() {
+      iconEl.innerHTML    = '<span class="confetti">🎉</span>';
+      titleEl.textContent = 'Email Verified!';
+      boxEl.className     = 'status-box status-success';
+      boxEl.textContent   = '✅ Your email has been verified successfully!';
+      msgEl.textContent   = 'Your Learnove account is now fully active. You can sign in and start your learning journey.';
+      actEl.innerHTML     = '<a href="/?action=login" class="btn">Sign In Now</a>';
+    }
+
+    function showError(msg) {
+      iconEl.textContent  = '⚠️';
+      titleEl.textContent = 'Verification Failed';
+      boxEl.className     = 'status-box status-error';
+      boxEl.textContent   = msg || 'This link may have expired. Links expire after 24 hours.';
+      msgEl.textContent   = 'Please request a new verification email from the sign-in page.';
+      actEl.innerHTML     = '<a href="/" class="btn">Return Home</a>';
+    }
+
+    // Supabase handles email confirmation automatically via detectSessionInUrl.
+    // The email link contains ?token_hash=...&type=signup which Supabase intercepts.
+    // We listen for the SIGNED_IN or USER_UPDATED event to confirm success.
+
+    let resolved = false;
+
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (resolved) return;
+
+      if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
+        resolved = true;
+
+        // Notify backend to sync is_email_verified flag in our profiles table
+        try {
+          await fetch(`${API_URL}/auth/confirm-email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`
+            }
+          });
+        } catch { /* best-effort */ }
+
+        showSuccess();
+
+        // Sign out after showing success so they log in properly
+        setTimeout(() => supabase.auth.signOut(), 3000);
+
+      } else if (event === 'SIGNED_IN' && session && !session.user?.email_confirmed_at) {
+        // Signed in but not verified — edge case
+        resolved = true;
+        showError('Verification link expired or already used. Please request a new one.');
+      }
+    });
+
+    // Fallback: if Supabase doesn't fire an event within 5 seconds,
+    // check the URL for error params Supabase puts there on failure.
+    setTimeout(() => {
+      if (resolved) return;
+      resolved = true;
+
+      const params = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.replace('#', '?'));
+
+      const error = params.get('error') || hashParams.get('error');
+      const errorDesc = params.get('error_description') || hashParams.get('error_description');
+
+      if (error) {
+        showError(decodeURIComponent(errorDesc || error).replace(/\+/g, ' '));
+      } else if (!params.get('token_hash') && !hashParams.get('access_token')) {
+        // No token at all in the URL
+        iconEl.textContent  = '❌';
+        titleEl.textContent = 'Invalid Link';
+        boxEl.className     = 'status-box status-error';
+        boxEl.textContent   = 'This verification link is invalid or missing.';
+        actEl.innerHTML     = '<a href="/" class="btn">Go Home</a>';
+      } else {
+        // Token was in URL but Supabase didn't fire — might still be processing
+        // Show a "still loading" message and let them refresh
+        boxEl.textContent = 'Still verifying… try refreshing the page if this takes too long.';
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
