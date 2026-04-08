@@ -1,0 +1,37 @@
+# render.yaml
+# Render Blueprint — defines your service configuration.
+# Place this file in the ROOT of your LEARNOVE folder.
+# Render reads it automatically when you connect your repo.
+
+services:
+  - type: web
+    name: learnove
+    runtime: node
+    rootDir: functions
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+
+    # Environment variables — you will fill these in on the Render dashboard.
+    # They are listed here just as a reference (values are set in Render UI, not here).
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: EMAIL_SERVICE
+        value: gmail
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: EMAIL_FROM_NAME
+        value: Learnove
