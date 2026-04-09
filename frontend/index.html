@@ -1,118 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Learnove · online &amp; physical · unified university</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <style>
     /* ══ LOADER ══════════════════════════════════════════════════════════════ */
-    #loader { position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%);background-size:400% 400%;animation:loaderBgShift 5s ease infinite; }
-    @keyframes loaderBgShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-    .loader-blob { position:absolute;border-radius:50%;filter:blur(90px);opacity:0;animation:blobAppear 1s ease forwards; }
+    #loader{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%);background-size:400% 400%;animation:loaderBgShift 5s ease infinite}
+    @keyframes loaderBgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .loader-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:0;animation:blobAppear 1s ease forwards}
     .lb1{width:500px;height:500px;background:radial-gradient(circle,#f7c8e8,transparent);top:-100px;left:-120px;animation-delay:.1s}
     .lb2{width:600px;height:600px;background:radial-gradient(circle,#c8d0f8,transparent);bottom:-150px;right:-150px;animation-delay:.2s}
     .lb3{width:350px;height:350px;background:radial-gradient(circle,#e8c8f8,transparent);top:40%;left:45%;transform:translate(-50%,-50%);animation-delay:.15s}
-    @keyframes blobAppear { to { opacity:.55; } }
-    .loader-inner { position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:32px; }
-    .loader-logo-mark { opacity:0;transform:translateY(-160px) scale(.7);animation:logoFall .9s cubic-bezier(.34,1.4,.64,1) .5s forwards;filter:drop-shadow(0 16px 40px rgba(150,90,200,.35)); }
-    @keyframes logoFall { 0%{opacity:0;transform:translateY(-160px) scale(.7) rotate(-8deg)} 60%{opacity:1;transform:translateY(6px) scale(1.04) rotate(1.5deg)} 80%{transform:translateY(-4px) scale(.98) rotate(-.5deg)} 100%{opacity:1;transform:translateY(0) scale(1) rotate(0)} }
-    .loader-word { display:flex;gap:4px;align-items:flex-end; }
-    .loader-char { font-family:'Orbitron',sans-serif;font-size:clamp(2.2rem,8vw,4.2rem);font-weight:900;letter-spacing:2px;opacity:0;transform:translateY(-60px);background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5,#c090d8);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 16px rgba(150,90,200,.3));animation:charDrop .6s cubic-bezier(.34,1.56,.64,1) forwards; }
+    @keyframes blobAppear{to{opacity:.55}}
+    .loader-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:32px}
+    .loader-logo-mark{opacity:0;transform:translateY(-160px) scale(.7);animation:logoFall .9s cubic-bezier(.34,1.4,.64,1) .5s forwards;filter:drop-shadow(0 16px 40px rgba(150,90,200,.35))}
+    @keyframes logoFall{0%{opacity:0;transform:translateY(-160px) scale(.7) rotate(-8deg)}60%{opacity:1;transform:translateY(6px) scale(1.04) rotate(1.5deg)}80%{transform:translateY(-4px) scale(.98) rotate(-.5deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+    .loader-word{display:flex;gap:4px;align-items:flex-end}
+    .loader-char{font-family:'Orbitron',sans-serif;font-size:clamp(2.2rem,8vw,4.2rem);font-weight:900;letter-spacing:2px;opacity:0;transform:translateY(-60px);background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5,#c090d8);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 16px rgba(150,90,200,.3));animation:charDrop .6s cubic-bezier(.34,1.56,.64,1) forwards}
     .loader-char:nth-child(1){animation-delay:1.4s}.loader-char:nth-child(2){animation-delay:1.55s}.loader-char:nth-child(3){animation-delay:1.70s}.loader-char:nth-child(4){animation-delay:1.85s}.loader-char:nth-child(5){animation-delay:2.00s}.loader-char:nth-child(6){animation-delay:2.15s}.loader-char:nth-child(7){animation-delay:2.30s}.loader-char:nth-child(8){animation-delay:2.45s}
-    @keyframes charDrop { 0%{opacity:0;transform:translateY(-60px) scaleY(.6)} 55%{opacity:1;transform:translateY(5px) scaleY(1.06)} 75%{transform:translateY(-3px) scaleY(.97)} 100%{opacity:1;transform:translateY(0) scaleY(1)} }
-    .loader-tagline { font-family:'Nunito',sans-serif;font-size:clamp(.75rem,2.5vw,1rem);font-weight:400;color:#4a2e6a;letter-spacing:4px;text-transform:uppercase;opacity:0;transform:translateY(10px);animation:taglineFade .8s ease 3.0s forwards; }
-    @keyframes taglineFade { to { opacity:.7;transform:translateY(0); } }
-    .loader-progress-wrap { width:clamp(180px,40vw,300px);height:3px;background:rgba(200,170,230,.25);border-radius:99px;overflow:hidden;opacity:0;animation:taglineFade .5s ease 2.8s forwards; }
-    .loader-progress-bar { height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#b06fd0,#80b8f0,#e08ed8);background-size:200% 100%;animation:progressFill 1.4s cubic-bezier(.4,0,.2,1) 3.1s forwards,shimmer 1.2s linear 3.1s infinite; }
-    @keyframes progressFill { 0%{width:0%} 100%{width:100%} }
-    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-    #loader.fade-out { animation:loaderFadeOut .85s cubic-bezier(.4,0,.2,1) forwards; }
-    @keyframes loaderFadeOut { 0%{opacity:1;transform:scale(1)} 60%{opacity:.4;transform:scale(1.015)} 100%{opacity:0;transform:scale(1.03);pointer-events:none} }
-    .loader-particles { position:absolute;inset:0;pointer-events:none;overflow:hidden; }
-    .particle { position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;animation:floatParticle linear infinite; }
-    @keyframes floatParticle { 0%{opacity:0;transform:translateY(0) scale(.5)} 10%{opacity:.7} 90%{opacity:.4} 100%{opacity:0;transform:translateY(-100vh) scale(1.2)} }
+    @keyframes charDrop{0%{opacity:0;transform:translateY(-60px) scaleY(.6)}55%{opacity:1;transform:translateY(5px) scaleY(1.06)}75%{transform:translateY(-3px) scaleY(.97)}100%{opacity:1;transform:translateY(0) scaleY(1)}}
+    .loader-tagline{font-family:'Nunito',sans-serif;font-size:clamp(.75rem,2.5vw,1rem);font-weight:400;color:#4a2e6a;letter-spacing:4px;text-transform:uppercase;opacity:0;transform:translateY(10px);animation:taglineFade .8s ease 3.0s forwards}
+    @keyframes taglineFade{to{opacity:.7;transform:translateY(0)}}
+    .loader-progress-wrap{width:clamp(180px,40vw,300px);height:3px;background:rgba(200,170,230,.25);border-radius:99px;overflow:hidden;opacity:0;animation:taglineFade .5s ease 2.8s forwards}
+    .loader-progress-bar{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#b06fd0,#80b8f0,#e08ed8);background-size:200% 100%;animation:progressFill 1.4s cubic-bezier(.4,0,.2,1) 3.1s forwards,shimmer 1.2s linear 3.1s infinite}
+    @keyframes progressFill{0%{width:0%}100%{width:100%}}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    #loader.fade-out{animation:loaderFadeOut .85s cubic-bezier(.4,0,.2,1) forwards}
+    @keyframes loaderFadeOut{0%{opacity:1;transform:scale(1)}60%{opacity:.4;transform:scale(1.015)}100%{opacity:0;transform:scale(1.03);pointer-events:none}}
+    .loader-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .particle{position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;animation:floatParticle linear infinite}
+    @keyframes floatParticle{0%{opacity:0;transform:translateY(0) scale(.5)}10%{opacity:.7}90%{opacity:.4}100%{opacity:0;transform:translateY(-100vh) scale(1.2)}}
+
     /* ══ MAIN SITE ═══════════════════════════════════════════════════════════ */
     *{margin:0;padding:0;box-sizing:border-box}
-    #main-site { opacity:0;transition:opacity .6s ease .2s; }
-    #main-site.visible { opacity:1; }
-    body { font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%);min-height:100vh; }
-    .bg-blobs { position:fixed;inset:0;z-index:0;pointer-events:none; }
-    .blob { position:absolute;border-radius:50%;filter:blur(80px);opacity:.5; }
+    #main-site{opacity:0;transition:opacity .6s ease .2s}
+    #main-site.visible{opacity:1}
+    body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#f0d6e8 0%,#e8d0f0 25%,#d6c8f5 50%,#c8d8f8 75%,#d0e8f8 100%);min-height:100vh}
+    .bg-blobs{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5}
     .blob-1{width:500px;height:500px;background:radial-gradient(circle,#f7c8e8,transparent);top:-100px;left:-100px}
     .blob-2{width:600px;height:600px;background:radial-gradient(circle,#c8d0f8,transparent);bottom:-150px;right:-150px}
     .blob-3{width:350px;height:350px;background:radial-gradient(circle,#e8c8f8,transparent);top:50%;left:50%;transform:translate(-50%,-50%)}
-    .glass { background:rgba(255,255,255,.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;border:1px solid rgba(255,255,255,.7);box-shadow:0 8px 32px rgba(180,150,200,.15); }
-    .container { position:relative;z-index:1;width:100%;height:100vh;overflow:hidden;display:grid;grid-template-columns:280px 1fr 280px;gap:16px;padding:20px; }
-    .left-panel { display:flex;flex-direction:column;gap:14px;height:100%; }
-    .panel-card { padding:18px;flex:1 1 0;min-height:0;display:flex;flex-direction:column;background:rgba(255,255,255,.3);backdrop-filter:blur(10px);border-radius:55px;border:1px solid rgba(255,255,255,.7);overflow:hidden; }
-    .card-label { font-size:.78rem;font-weight:700;color:#4a2e6a;letter-spacing:.4px;text-align:center;margin-bottom:10px;opacity:.85; }
-    .donut-area { flex:1;display:flex;align-items:center;justify-content:center;position:relative; }
-    .donut-svg { width:130px;height:130px;transform:rotate(-90deg); }
-    .donut-track { fill:none;stroke:rgba(200,170,230,.25);stroke-width:10; }
-    .donut-seg-purple { fill:none;stroke:url(#engGrad1);stroke-width:10;stroke-linecap:round;stroke-dasharray:0 251.2;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1); }
-    .donut-seg-teal { fill:none;stroke:url(#engGrad2);stroke-width:10;stroke-linecap:round;stroke-dasharray:0 251.2;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1) .15s; }
-    .donut-center { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center; }
-    .donut-pct { font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1; }
-    .donut-sub { font-size:.6rem;color:#7a5a9a;font-weight:600;opacity:.75;margin-top:2px; }
-    .engagement-metrics { display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;padding:0 4px; }
-    .metric-item { display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(255,255,255,.4);border-radius:14px;padding:6px 2px;border:1px solid rgba(255,255,255,.7);transition:all .25s; }
-    .metric-item:hover { background:rgba(220,180,250,.35);transform:translateY(-2px);box-shadow:0 4px 12px rgba(150,90,180,.2); }
-    .metric-icon { font-size:16px;line-height:1; }
-    .metric-label { font-size:.58rem;font-weight:600;color:#4a2e6a;opacity:.8;text-align:center;line-height:1.1; }
-    .metric-val { font-size:.65rem;font-weight:700;color:#7b3fa0; }
-    .gauge-area { flex:1;display:flex;align-items:center;justify-content:center;position:relative; }
-    .gauge-svg { width:110px;height:110px; }
-    .gauge-center { position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);display:flex;flex-direction:column;align-items:center; }
-    .gauge-val { font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;color:#4a2e6a;line-height:1; }
-    .gauge-unit { font-size:.6rem;color:#7a5a9a;font-weight:600;margin-top:1px; }
-    .dashboard-actions { display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 4px; }
-    .action-btn { display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:16px;transition:all .25s; }
-    .action-btn:hover { background:rgba(220,180,250,.4);transform:translateY(-2px);box-shadow:0 5px 14px rgba(150,90,180,.25); }
-    .action-icon { font-size:18px; }
-    .action-label { font-size:.6rem;font-weight:700;color:#4a2e6a;opacity:.85; }
-    .card-footer-label { text-align:center;font-size:.72rem;font-weight:700;color:#5a3a7a;letter-spacing:.5px;margin-top:8px;opacity:.7;text-transform:uppercase; }
-    .center-wrapper { position:relative;display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.45);backdrop-filter:blur(20px);border-radius:55px;border:1px solid rgba(255,255,255,.7); }
-    .center-panel { width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center; }
-    .notch-tray { position:absolute;top:-2px;left:50%;transform:translateX(-50%) scale(1.02);z-index:10;animation:pillGradientShift 3s infinite alternate;background-size:200% 200%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:5px 32px;border-radius:60px;display:flex;gap:40px;border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 28px rgba(170,130,200,.4);transition:all .3s ease; }
-    @keyframes pillGradientShift { 0%{background:linear-gradient(145deg,#f0d6e8,#e8d0f0,#d6c8f5)} 100%{background:linear-gradient(145deg,#d0e8f8,#f0d6e8,#e8d0f0)} }
-    .pill-icon { display:flex;align-items:center;justify-content:center;font-size:22px;color:white;font-weight:300;text-shadow:0 2px 6px rgba(0,0,0,.2);transition:all .3s ease;line-height:1;z-index:12; }
-    .pill-icon:hover { transform:scale(1.15); }
-    .nav-icon-box { width:70px;height:70px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:24px;color:#4a2e6a;backdrop-filter:blur(4px);transition:all .2s;cursor:default; }
-    .nav-icon-box span { font-size:.6rem;font-weight:600;color:#4a2e6a;opacity:.8;line-height:1; }
-    .nav-icon-box:hover { background:rgba(220,180,250,.4);transform:translateY(-2px); }
-    .center-content { width:100%;height:100%;display:flex;flex-direction:column;align-items:center;margin-top:72px; }
-    .image-container { display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin:10px 0; }
-    .centered-image { max-width:85%;max-height:55vh;object-fit:contain;transition:transform .3s ease; }
-    .centered-image:hover { transform:scale(1.02); }
-    .company-name { font-family:'Orbitron',sans-serif;font-size:2.6rem;font-weight:900;letter-spacing:6px;text-transform:uppercase;margin-top:24px;margin-bottom:8px;background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent; }
-    .tagline { font-size:1.1rem;font-weight:400;color:#2c1c38;text-align:center;line-height:1.6;max-width:80%;margin-bottom:16px;letter-spacing:.3px; }
-    .main-nav-row { display:flex;gap:28px;padding:10px 0;margin-bottom:10px; }
-    .right-panel { display:flex;flex-direction:column;gap:12px;height:100%; }
-    .right-pill { flex-shrink:0;background:rgba(255,255,255,.45);backdrop-filter:blur(20px);border-radius:60px;border:1px solid rgba(255,255,255,.8);box-shadow:0 6px 22px rgba(150,120,180,.25);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px; }
-    .pill-icons-group { display:flex;align-items:center;gap:20px; }
-    .pill-icons-group .icon-wrapper { display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(160,100,200,.7);border-radius:50%;transition:all .3s;cursor:default;border:1px solid rgba(255,255,255,.6);box-shadow:0 4px 12px rgba(130,80,170,.3); }
-    .pill-icons-group .icon-wrapper svg { width:26px;height:26px;stroke:white; }
-    .signup-pill { background:rgba(255,255,255,.4);border-radius:40px;padding:8px 22px;border:1px solid white;font-size:.95rem;font-weight:600;color:#2e1b3a;letter-spacing:.3px;backdrop-filter:blur(4px);white-space:nowrap;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px; }
-    .signup-pill:hover { background:rgba(255,255,255,.65);transform:translateY(-1px); }
-    .course-panel { flex:1;display:flex;flex-direction:column;background:rgba(255,255,255,.3);backdrop-filter:blur(4px);border-radius:55px;border:1px solid rgba(255,255,255,.6);overflow:hidden;padding:18px 14px 14px; }
-    .search-section { display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.7);border-radius:60px;margin-bottom:16px; }
-    .search-icon { font-size:18px;opacity:.6; }
-    .search-section input { background:transparent;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:.95rem;width:100%;color:#2c1c38; }
-    .search-section input::placeholder { color:rgba(44,28,56,.5);font-weight:300; }
-    .course-tab-row { display:flex;gap:8px;margin-bottom:16px; }
-    .course-tab { flex:1;padding:8px 0;border-radius:40px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.8);font-size:.85rem;font-weight:600;color:#2e1b3a;text-align:center;cursor:pointer;transition:all .2s; }
-    .course-tab.active { background:rgba(220,180,250,.7);border-color:white;box-shadow:0 4px 12px rgba(150,90,180,.3);color:#1f0f2e;font-weight:700;transform:scale(1.02); }
-    .course-list { flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;min-height:0;padding-right:2px; }
-    .course-item { display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:24px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7); }
-    .course-thumb { width:42px;height:42px;border-radius:14px;flex-shrink:0;background:rgba(200,160,230,.4);display:flex;align-items:center;justify-content:center;font-size:22px; }
-    .course-info { flex:1;min-width:0; }
-    .course-title { font-weight:700;font-size:.95rem;line-height:1.3;color:#2e1b3a;display:block; }
-    .course-meta { font-size:.7rem;opacity:.7;color:#2e1b3a;display:flex;gap:8px; }
-    .course-list::-webkit-scrollbar { width:4px; }
-    .course-list::-webkit-scrollbar-thumb { background:rgba(160,96,208,.3);border-radius:2px; }
-    .mobile-nav { display:none; }
-    @media (max-width:1023px) {
+    .glass{background:rgba(255,255,255,.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;border:1px solid rgba(255,255,255,.7);box-shadow:0 8px 32px rgba(180,150,200,.15)}
+    .container{position:relative;z-index:1;width:100%;height:100vh;overflow:hidden;display:grid;grid-template-columns:280px 1fr 280px;gap:16px;padding:20px}
+    .left-panel{display:flex;flex-direction:column;gap:14px;height:100%}
+    .panel-card{padding:18px;flex:1 1 0;min-height:0;display:flex;flex-direction:column;background:rgba(255,255,255,.3);backdrop-filter:blur(10px);border-radius:55px;border:1px solid rgba(255,255,255,.7);overflow:hidden}
+    .card-label{font-size:.78rem;font-weight:700;color:#4a2e6a;letter-spacing:.4px;text-align:center;margin-bottom:10px;opacity:.85}
+    .donut-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+    .donut-svg{width:130px;height:130px;transform:rotate(-90deg)}
+    .donut-track{fill:none;stroke:rgba(200,170,230,.25);stroke-width:10}
+    .donut-seg-purple{fill:none;stroke:url(#engGrad1);stroke-width:10;stroke-linecap:round;stroke-dasharray:0 251.2;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1)}
+    .donut-seg-teal{fill:none;stroke:url(#engGrad2);stroke-width:10;stroke-linecap:round;stroke-dasharray:0 251.2;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1) .15s}
+    .donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+    .donut-pct{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+    .donut-sub{font-size:.6rem;color:#7a5a9a;font-weight:600;opacity:.75;margin-top:2px}
+    .engagement-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;padding:0 4px}
+    .metric-item{display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(255,255,255,.4);border-radius:14px;padding:6px 2px;border:1px solid rgba(255,255,255,.7);transition:all .25s}
+    .metric-item:hover{background:rgba(220,180,250,.35);transform:translateY(-2px);box-shadow:0 4px 12px rgba(150,90,180,.2)}
+    .metric-icon{font-size:16px;line-height:1}
+    .metric-label{font-size:.58rem;font-weight:600;color:#4a2e6a;opacity:.8;text-align:center;line-height:1.1}
+    .metric-val{font-size:.65rem;font-weight:700;color:#7b3fa0}
+    .gauge-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+    .gauge-svg{width:110px;height:110px}
+    .gauge-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);display:flex;flex-direction:column;align-items:center}
+    .gauge-val{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;color:#4a2e6a;line-height:1}
+    .gauge-unit{font-size:.6rem;color:#7a5a9a;font-weight:600;margin-top:1px}
+    .dashboard-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 4px}
+    .action-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:16px;transition:all .25s;cursor:pointer}
+    .action-btn:hover{background:rgba(220,180,250,.4);transform:translateY(-2px);box-shadow:0 5px 14px rgba(150,90,180,.25)}
+    .action-icon{font-size:18px}
+    .action-label{font-size:.6rem;font-weight:700;color:#4a2e6a;opacity:.85}
+    .card-footer-label{text-align:center;font-size:.72rem;font-weight:700;color:#5a3a7a;letter-spacing:.5px;margin-top:8px;opacity:.7;text-transform:uppercase}
+    .center-wrapper{position:relative;display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.45);backdrop-filter:blur(20px);border-radius:55px;border:1px solid rgba(255,255,255,.7)}
+    .center-panel{width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center}
+    .notch-tray{position:absolute;top:-2px;left:50%;transform:translateX(-50%) scale(1.02);z-index:10;animation:pillGradientShift 3s infinite alternate;background-size:200% 200%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:5px 32px;border-radius:60px;display:flex;gap:40px;border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 28px rgba(170,130,200,.4);transition:all .3s ease}
+    @keyframes pillGradientShift{0%{background:linear-gradient(145deg,#f0d6e8,#e8d0f0,#d6c8f5)}100%{background:linear-gradient(145deg,#d0e8f8,#f0d6e8,#e8d0f0)}}
+    .pill-icon{display:flex;align-items:center;justify-content:center;font-size:22px;color:white;font-weight:300;text-shadow:0 2px 6px rgba(0,0,0,.2);transition:all .3s ease;line-height:1;z-index:12}
+    .pill-icon:hover{transform:scale(1.15)}
+    .nav-icon-box{width:70px;height:70px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:24px;color:#4a2e6a;backdrop-filter:blur(4px);transition:all .2s;cursor:default}
+    .nav-icon-box span{font-size:.6rem;font-weight:600;color:#4a2e6a;opacity:.8;line-height:1}
+    .nav-icon-box:hover{background:rgba(220,180,250,.4);transform:translateY(-2px)}
+    .center-content{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;margin-top:72px}
+    .image-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin:10px 0}
+    .centered-image{max-width:85%;max-height:55vh;object-fit:contain;transition:transform .3s ease}
+    .centered-image:hover{transform:scale(1.02)}
+    .company-name{font-family:'Orbitron',sans-serif;font-size:2.6rem;font-weight:900;letter-spacing:6px;text-transform:uppercase;margin-top:24px;margin-bottom:8px;background:linear-gradient(145deg,#321d47,#6b3f8c,#9f6bb5);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .tagline{font-size:1.1rem;font-weight:400;color:#2c1c38;text-align:center;line-height:1.6;max-width:80%;margin-bottom:16px;letter-spacing:.3px}
+    .main-nav-row{display:flex;gap:28px;padding:10px 0;margin-bottom:10px}
+    .right-panel{display:flex;flex-direction:column;gap:12px;height:100%}
+    .right-pill{flex-shrink:0;background:rgba(255,255,255,.45);backdrop-filter:blur(20px);border-radius:60px;border:1px solid rgba(255,255,255,.8);box-shadow:0 6px 22px rgba(150,120,180,.25);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .pill-icons-group{display:flex;align-items:center;gap:20px}
+    .pill-icons-group .icon-wrapper{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(160,100,200,.7);border-radius:50%;transition:all .3s;cursor:default;border:1px solid rgba(255,255,255,.6);box-shadow:0 4px 12px rgba(130,80,170,.3)}
+    .pill-icons-group .icon-wrapper svg{width:26px;height:26px;stroke:white}
+    .signup-pill{background:rgba(255,255,255,.4);border-radius:40px;padding:8px 22px;border:1px solid white;font-size:.95rem;font-weight:600;color:#2e1b3a;letter-spacing:.3px;backdrop-filter:blur(4px);white-space:nowrap;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+    .signup-pill:hover{background:rgba(255,255,255,.65);transform:translateY(-1px)}
+    .course-panel{flex:1;display:flex;flex-direction:column;background:rgba(255,255,255,.3);backdrop-filter:blur(4px);border-radius:55px;border:1px solid rgba(255,255,255,.6);overflow:hidden;padding:18px 14px 14px}
+    .search-section{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.7);border-radius:60px;margin-bottom:16px}
+    .search-icon{font-size:18px;opacity:.6}
+    .search-section input{background:transparent;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:.95rem;width:100%;color:#2c1c38}
+    .search-section input::placeholder{color:rgba(44,28,56,.5);font-weight:300}
+    .course-tab-row{display:flex;gap:8px;margin-bottom:16px}
+    .course-tab{flex:1;padding:8px 0;border-radius:40px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.8);font-size:.85rem;font-weight:600;color:#2e1b3a;text-align:center;cursor:pointer;transition:all .2s}
+    .course-tab.active{background:rgba(220,180,250,.7);border-color:white;box-shadow:0 4px 12px rgba(150,90,180,.3);color:#1f0f2e;font-weight:700;transform:scale(1.02)}
+    .course-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;min-height:0;padding-right:2px}
+    .course-item{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:24px;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7)}
+    .course-thumb{width:42px;height:42px;border-radius:14px;flex-shrink:0;background:rgba(200,160,230,.4);display:flex;align-items:center;justify-content:center;font-size:22px}
+    .course-info{flex:1;min-width:0}
+    .course-title{font-weight:700;font-size:.95rem;line-height:1.3;color:#2e1b3a;display:block}
+    .course-meta{font-size:.7rem;opacity:.7;color:#2e1b3a;display:flex;gap:8px}
+    .course-list::-webkit-scrollbar{width:4px}
+    .course-list::-webkit-scrollbar-thumb{background:rgba(160,96,208,.3);border-radius:2px}
+
+    /* ══ HAMBURGER NAV (Desktop) ════════════════════════════════════════════ */
+    .hamburger-btn{position:fixed;top:20px;left:20px;z-index:5000;width:52px;height:52px;background:rgba(255,255,255,.6);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.9);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;box-shadow:0 8px 24px rgba(150,90,200,.2);transition:all .3s cubic-bezier(.34,1.3,.64,1);display:none}
+    .hamburger-btn:hover{background:rgba(255,255,255,.8);transform:scale(1.08);box-shadow:0 12px 32px rgba(150,90,200,.3)}
+    .hamburger-btn .hb-line{width:22px;height:2.5px;background:linear-gradient(90deg,#6b3f8c,#b06fd0);border-radius:2px;transition:all .35s cubic-bezier(.34,1.3,.64,1);transform-origin:center}
+    .hamburger-btn.open .hb-line:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+    .hamburger-btn.open .hb-line:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger-btn.open .hb-line:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+    /* Desktop nav drawer */
+    .desktop-nav-drawer{position:fixed;top:0;left:0;height:100vh;width:260px;z-index:4999;transform:translateX(-100%);transition:transform .4s cubic-bezier(.34,1.2,.64,1);display:none}
+    .desktop-nav-drawer.open{transform:translateX(0)}
+    .drawer-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(240,214,232,.97),rgba(214,200,245,.97),rgba(200,216,248,.97));backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,.8);box-shadow:8px 0 40px rgba(150,90,200,.2)}
+    .drawer-inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;padding:90px 24px 32px}
+    .drawer-brand{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;letter-spacing:3px;background:linear-gradient(145deg,#321d47,#6b3f8c);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(176,111,208,.2)}
+    .drawer-nav{display:flex;flex-direction:column;gap:6px;flex:1}
+    .drawer-nav-item{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:20px;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .25s;text-decoration:none;color:#4a2e6a;font-weight:700;font-size:.95rem}
+    .drawer-nav-item:hover{background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.9);transform:translateX(4px);box-shadow:0 4px 16px rgba(150,90,180,.15)}
+    .drawer-nav-item.active{background:rgba(255,255,255,.7);border-color:rgba(176,111,208,.3);box-shadow:0 4px 16px rgba(150,90,180,.2)}
+    .drawer-nav-item .nav-icon{font-size:1.3rem;width:32px;text-align:center}
+    .drawer-nav-item .nav-label{font-size:.92rem}
+    .drawer-nav-item .nav-badge{margin-left:auto;background:linear-gradient(135deg,#b06fd0,#80b8f0);color:white;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:20px}
+    .drawer-bottom{border-top:1px solid rgba(176,111,208,.2);padding-top:20px;display:flex;flex-direction:column;gap:8px}
+    .drawer-overlay{position:fixed;inset:0;z-index:4998;background:rgba(30,10,50,.3);backdrop-filter:blur(2px);display:none;opacity:0;transition:opacity .3s}
+    .drawer-overlay.open{display:block;opacity:1}
+
+    /* ══ MOBILE NAV ══════════════════════════════════════════════════════════ */
+    .mobile-nav{display:none}
+
+    /* ══ PROFILE DROPDOWN ════════════════════════════════════════════════════ */
+    .profile-dropdown-wrapper{position:relative}
+    .profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;width:300px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-radius:24px;border:1px solid rgba(255,255,255,.9);box-shadow:0 20px 60px rgba(80,20,120,.2);padding:0;overflow:hidden;opacity:0;transform:translateY(-10px) scale(.97);pointer-events:none;transition:all .3s cubic-bezier(.34,1.3,.64,1);z-index:9000}
+    .profile-dropdown.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+    .pd-header{background:linear-gradient(135deg,#b06fd0,#8090e0,#80b8f0);padding:20px;display:flex;align-items:center;gap:14px}
+    .pd-avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.6)}
+    .pd-avatar-placeholder{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.2rem;border:3px solid rgba(255,255,255,.5);flex-shrink:0}
+    .pd-info{flex:1;min-width:0}
+    .pd-name{color:white;font-weight:700;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pd-email{color:rgba(255,255,255,.8);font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pd-badge{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:20px;font-size:.65rem;font-weight:700;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.3)}
+    .pd-body{padding:12px}
+    .pd-menu-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;cursor:pointer;transition:all .2s;color:#321d47;font-size:.88rem;font-weight:600;text-decoration:none}
+    .pd-menu-item:hover{background:rgba(176,111,208,.1)}
+    .pd-menu-item .pdi{font-size:1rem;width:22px;text-align:center}
+    .pd-divider{height:1px;background:rgba(200,170,230,.2);margin:6px 0}
+    .pd-signout{color:#e53935 !important}
+    .pd-signout:hover{background:rgba(229,57,53,.08) !important}
+
+    /* ══ MODAL ═══════════════════════════════════════════════════════════════ */
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,10,50,.6);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center;padding:16px}
+    .modal.show{display:flex;animation:modalIn .35s cubic-bezier(.34,1.3,.64,1)}
+    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .modal-content{width:100%;max-width:580px;max-height:92vh;overflow-y:auto;overflow-x:hidden;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(248,244,255,.97));border:1px solid rgba(255,255,255,.9);box-shadow:0 32px 80px rgba(80,20,120,.25),0 0 0 1px rgba(176,111,208,.1);padding:36px 32px 28px;position:relative;scrollbar-width:thin}
+    .modal-content::-webkit-scrollbar{width:4px}
+    .modal-content::-webkit-scrollbar-thumb{background:rgba(176,111,208,.3);border-radius:2px}
+    .close-modal{position:absolute;top:18px;right:22px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;color:#6a4a8a;background:rgba(176,111,208,.1);border-radius:50%;border:1px solid rgba(176,111,208,.15);transition:all .2s;line-height:1}
+    .close-modal:hover{background:rgba(176,111,208,.2);transform:scale(1.1)}
+    .modal-header{text-align:center;margin-bottom:20px}
+    .modal-logo{width:52px;height:52px;object-fit:contain;margin-bottom:10px}
+    .modal-header h2{font-family:'Orbitron',sans-serif;font-size:1.4rem;color:#321d47;margin-bottom:4px}
+    .modal-header p{color:#7a5a9a;font-size:.85rem}
+    .auth-tabs{display:flex;gap:6px;margin-bottom:20px;background:rgba(200,170,230,.12);border-radius:40px;padding:4px}
+    .auth-tab{flex:1;padding:9px 14px;background:none;border:none;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;color:#7a5a9a;cursor:pointer;border-radius:36px;transition:all .25s}
+    .auth-tab.active{background:white;color:#321d47;box-shadow:0 2px 12px rgba(176,111,208,.2)}
+
+    /* Account type + role tabs */
+    .role-type-tabs{display:flex;gap:10px;margin-bottom:18px}
+    .role-type-tab{flex:1;padding:12px 8px;border-radius:16px;border:2px solid rgba(200,170,230,.3);background:white;cursor:pointer;text-align:center;transition:all .25s;font-family:'Nunito',sans-serif}
+    .role-type-tab:hover{border-color:rgba(176,111,208,.5)}
+    .role-type-tab.active{border-color:#b06fd0;background:linear-gradient(135deg,rgba(176,111,208,.08),rgba(128,184,240,.08));box-shadow:0 4px 16px rgba(176,111,208,.15)}
+    .role-tab-icon{font-size:1.5rem;margin-bottom:4px}
+    .role-tab-label{font-size:.83rem;font-weight:700;color:#321d47}
+    .role-tab-desc{font-size:.7rem;color:#7a5a9a;margin-top:2px}
+    .role-section{display:none;animation:slideIn .3s ease}
+    .role-section.active{display:block}
+    @keyframes slideIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+
+    /* Progress steps */
+    .signup-steps{display:flex;align-items:center;gap:0;margin-bottom:24px}
+    .step-item{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
+    .step-item:not(:last-child)::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:rgba(200,170,230,.3);z-index:0}
+    .step-item.done::after{background:linear-gradient(90deg,#b06fd0,#80b8f0)}
+    .step-circle{width:28px;height:28px;border-radius:50%;background:rgba(200,170,230,.2);border:2px solid rgba(200,170,230,.4);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#7a5a9a;position:relative;z-index:1;transition:all .3s}
+    .step-item.active .step-circle{background:linear-gradient(135deg,#b06fd0,#80b8f0);border-color:transparent;color:white;box-shadow:0 4px 12px rgba(176,111,208,.4)}
+    .step-item.done .step-circle{background:linear-gradient(135deg,#43a047,#66bb6a);border-color:transparent;color:white}
+    .step-label{font-size:.62rem;font-weight:700;color:#9a8aaa;margin-top:5px;text-align:center}
+    .step-item.active .step-label{color:#6b3f8c}
+    .step-panel{display:none}
+    .step-panel.active{display:block;animation:slideIn .3s ease}
+    .step-nav-btns{display:flex;gap:10px;margin-top:16px}
+    .step-btn-back{flex:1;padding:12px;border:2px solid rgba(200,170,230,.4);background:white;border-radius:30px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:#7a5a9a;cursor:pointer;transition:all .2s}
+    .step-btn-back:hover{border-color:#b06fd0;color:#6b3f8c}
+    .step-btn-next{flex:2;padding:12px;background:linear-gradient(135deg,#b06fd0,#8090e0,#80b8f0);background-size:200% 100%;border:none;border-radius:30px;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .3s;letter-spacing:.5px}
+    .step-btn-next:hover{background-position:100% 0;box-shadow:0 8px 24px rgba(176,111,208,.4)}
+
+    /* Avatar upload */
+    .avatar-upload-section{display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:14px;background:rgba(200,170,230,.06);border:2px dashed rgba(176,111,208,.25);border-radius:16px}
+    #avatarUploadArea{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,rgba(176,111,208,.15),rgba(128,184,240,.15));border:2px dashed rgba(176,111,208,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0;transition:all .2s}
+    #avatarUploadArea:hover{border-color:#b06fd0}
+    #avatarPlaceholder{display:flex;flex-direction:column;align-items:center;gap:2px}
+    #avatarPlaceholder span:first-child{font-size:1.3rem}
+    #avatarPlaceholder span:last-child{font-size:.55rem;color:#7a5a9a;font-weight:600}
+    #avatarPreview{width:100%;height:100%;object-fit:cover;display:none}
+    .avatar-info h4{font-size:.85rem;font-weight:700;color:#321d47;margin-bottom:2px}
+    .avatar-info p{font-size:.72rem;color:#7a5a9a}
+
+    /* Form fields */
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;margin-bottom:5px;color:#4a2e6a;font-weight:700;font-size:.82rem}
+    .form-group label .required{color:#e05a8a;margin-left:2px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:2px solid rgba(200,170,230,.3);border-radius:12px;font-family:'Nunito',sans-serif;font-size:.9rem;background:white;color:#321d47;transition:all .2s;outline:none}
+    .form-group textarea{resize:none;height:70px}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#b06fd0;box-shadow:0 0 0 4px rgba(176,111,208,.08)}
+    .form-group input.error{border-color:#e05a8a}
+    .field-error{font-size:.72rem;color:#e05a8a;margin-top:3px;min-height:14px;display:block}
+    .password-wrapper{position:relative}
+    .password-wrapper input{padding-right:42px}
+    .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#7a5a9a;font-size:1rem;padding:4px;line-height:1}
+    .password-strength{margin-top:5px}
+    .strength-bar-wrap{height:4px;background:rgba(200,170,230,.2);border-radius:4px;overflow:hidden;margin-bottom:3px}
+    #passwordStrengthBar{height:100%;width:0;border-radius:4px;transition:all .3s}
+    #passwordStrengthLabel{font-size:.7rem;font-weight:700}
+    .section-label{font-size:.82rem;font-weight:700;color:#4a2e6a;margin-bottom:8px}
+    .terms-group{margin:12px 0}
+    .checkbox-label{display:flex;align-items:flex-start;gap:8px;font-size:.83rem;color:#4a2e6a;cursor:pointer;line-height:1.4}
+    .checkbox-label input[type="checkbox"]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:#b06fd0;cursor:pointer}
+    .checkbox-label a{color:#b06fd0;text-decoration:none;font-weight:700}
+    .login-options{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .remember-label{display:flex;align-items:center;gap:8px;font-size:.83rem;color:#4a2e6a;cursor:pointer}
+    .remember-label input{accent-color:#b06fd0}
+    .forgot-link{font-size:.83rem;color:#b06fd0;font-weight:700;text-decoration:none;cursor:pointer;background:none;border:none;font-family:inherit}
+    .forgot-link:hover{text-decoration:underline}
+    .submit-btn{width:100%;padding:13px;margin-top:4px;background:linear-gradient(135deg,#b06fd0,#8090e0,#80b8f0);background-size:200% 100%;border:none;border-radius:30px;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s;letter-spacing:.5px}
+    .submit-btn:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 10px 28px rgba(176,111,208,.4)}
+    .submit-btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+    .loading-spinner{display:none;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .divider{display:flex;align-items:center;gap:12px;margin:18px 0 14px}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(200,170,230,.35)}
+    .divider span{font-size:.78rem;color:#7a5a9a;font-weight:600;white-space:nowrap}
+    .social-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .social-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border:2px solid rgba(200,170,230,.3);border-radius:24px;background:white;font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;color:#321d47;cursor:pointer;transition:all .2s}
+    .social-btn:hover{border-color:#b06fd0;transform:translateY(-1px);box-shadow:0 4px 12px rgba(176,111,208,.15)}
+    .social-btn svg{width:16px;height:16px;flex-shrink:0}
+    .switch-form{text-align:center;margin-top:14px;font-size:.83rem;color:#7a5a9a}
+    .switch-form a{color:#b06fd0;font-weight:700;text-decoration:none;cursor:pointer}
+    .auth-form{display:none}
+    .auth-form.active{display:block;animation:slideIn .3s ease}
+
+    /* Instructor token field */
+    .instructor-token-box{background:linear-gradient(135deg,rgba(176,111,208,.06),rgba(128,184,240,.06));border:2px solid rgba(176,111,208,.2);border-radius:16px;padding:16px;margin-bottom:16px}
+    .instructor-token-box h4{font-size:.85rem;font-weight:700;color:#321d47;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .instructor-token-box p{font-size:.75rem;color:#7a5a9a;line-height:1.5;margin-bottom:10px}
+    .token-input-wrapper{position:relative}
+    .token-input-wrapper input{padding-right:44px;letter-spacing:2px;font-family:'Orbitron',sans-serif;font-size:.85rem}
+    .token-visibility-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#7a5a9a;font-size:.9rem;padding:4px}
+
+    /* Info box */
+    .info-notice{background:rgba(128,184,240,.08);border:1px solid rgba(128,184,240,.3);border-radius:12px;padding:10px 14px;font-size:.75rem;color:#2a4a7a;margin-bottom:14px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+    .info-notice .notice-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+    .warning-notice{background:rgba(255,152,0,.06);border:1px solid rgba(255,152,0,.25);border-radius:12px;padding:10px 14px;font-size:.75rem;color:#7a4200;margin-bottom:14px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+
+    /* ID upload */
+    .id-upload-area{border:2px dashed rgba(176,111,208,.3);border-radius:14px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(200,170,230,.04)}
+    .id-upload-area:hover{border-color:#b06fd0;background:rgba(176,111,208,.05)}
+    .id-upload-area .upload-icon{font-size:2rem;margin-bottom:8px;display:block}
+    .id-upload-area p{font-size:.78rem;color:#7a5a9a;line-height:1.5}
+    .id-upload-area .file-name{font-size:.72rem;color:#b06fd0;font-weight:700;margin-top:6px}
+    .id-types{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+    .id-type-chip{padding:5px 12px;border-radius:20px;border:2px solid rgba(200,170,230,.3);background:white;font-size:.75rem;font-weight:700;color:#4a2e6a;cursor:pointer;transition:all .2s}
+    .id-type-chip.selected{border-color:#b06fd0;background:rgba(176,111,208,.1);color:#6b3f8c}
+
+    /* Phone input */
+    .phone-wrapper{display:flex;gap:8px}
+    .phone-code{width:90px;flex-shrink:0}
+
+    /* Toast */
+    .toast{position:fixed;bottom:24px;right:24px;min-width:260px;max-width:380px;padding:14px 20px;background:white;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.18);font-family:'Nunito',sans-serif;font-size:.9rem;color:#321d47;display:flex;align-items:center;gap:12px;transform:translateY(100px);opacity:0;transition:all .35s cubic-bezier(.34,1.3,.64,1);border-left:4px solid #b06fd0;z-index:20000}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.success{border-left-color:#43a047}
+    .toast.error{border-left-color:#e53935}
+    .toast.warning{border-left-color:#fb8c00}
+    .toast-icon{font-size:1.1rem;flex-shrink:0}
+    .toast-message{flex:1}
+    .toast-close{margin-left:auto;background:none;border:none;color:#7a5a9a;cursor:pointer;font-size:1rem;padding:2px 4px;flex-shrink:0}
+    img.emoji{height:1em;width:1em;vertical-align:-.1em}
+
+    /* ══ RESPONSIVE ══════════════════════════════════════════════════════════ */
+    @media(min-width:1024px){
+      .hamburger-btn{display:flex}
+      .desktop-nav-drawer{display:block}
+      .mobile-nav{display:none}
+    }
+    @media(max-width:1023px){
       .container{height:auto;overflow:visible;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:14px;padding:16px}
       .center-wrapper{grid-column:1/-1;grid-row:1;border-radius:32px;min-height:380px}
       .left-panel{grid-column:1;grid-row:2;height:auto;flex-direction:row;gap:12px}
@@ -135,7 +328,7 @@
       .mobile-nav .nav-item span{font-size:20px;line-height:1}
       .mobile-nav .nav-item.active{background:linear-gradient(135deg,rgba(220,180,250,.6),rgba(190,200,255,.5));border:1px solid rgba(255,255,255,.9);color:#3a1a5a;box-shadow:0 4px 14px rgba(150,90,180,.25)}
     }
-    @media (max-width:599px) {
+    @media(max-width:599px){
       body{overflow-x:hidden}
       .container{display:flex;flex-direction:column;gap:12px;padding:12px}
       .center-wrapper{border-radius:28px}
@@ -156,104 +349,10 @@
       .right-pill{border-radius:40px;padding:10px 16px}
       .signup-pill{padding:7px 14px;font-size:.82rem}
       .course-panel{border-radius:24px;max-height:420px}
-    }
-    /* ══ MODAL ═══════════════════════════════════════════════════════════════ */
-    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,10,50,.6);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center;padding:16px}
-    .modal.show{display:flex;animation:modalIn .35s cubic-bezier(.34,1.3,.64,1)}
-    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-    .modal-content{width:100%;max-width:540px;max-height:92vh;overflow-y:auto;overflow-x:hidden;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(248,244,255,.97));border:1px solid rgba(255,255,255,.9);box-shadow:0 32px 80px rgba(80,20,120,.25),0 0 0 1px rgba(176,111,208,.1);padding:36px 32px 28px;position:relative;scrollbar-width:thin}
-    .modal-content::-webkit-scrollbar{width:4px}
-    .modal-content::-webkit-scrollbar-thumb{background:rgba(176,111,208,.3);border-radius:2px}
-    .close-modal{position:absolute;top:18px;right:22px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;color:#6a4a8a;background:rgba(176,111,208,.1);border-radius:50%;border:1px solid rgba(176,111,208,.15);transition:all .2s;line-height:1}
-    .close-modal:hover{background:rgba(176,111,208,.2);transform:scale(1.1)}
-    .modal-header{text-align:center;margin-bottom:24px}
-    .modal-logo{width:56px;height:56px;object-fit:contain;margin-bottom:12px}
-    .modal-header h2{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:#321d47;margin-bottom:4px}
-    .modal-header p{color:#7a5a9a;font-size:.88rem}
-    .auth-tabs{display:flex;gap:6px;margin-bottom:24px;background:rgba(200,170,230,.12);border-radius:40px;padding:4px}
-    .auth-tab{flex:1;padding:10px 16px;background:none;border:none;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;color:#7a5a9a;cursor:pointer;border-radius:36px;transition:all .25s}
-    .auth-tab.active{background:white;color:#321d47;box-shadow:0 2px 12px rgba(176,111,208,.2)}
-    .account-type-tabs{display:flex;gap:10px;margin-bottom:20px}
-    .account-type-tab{flex:1;padding:14px 10px;border-radius:16px;border:2px solid rgba(200,170,230,.3);background:white;cursor:pointer;text-align:center;transition:all .25s;font-family:'Nunito',sans-serif}
-    .account-type-tab:hover{border-color:rgba(176,111,208,.5)}
-    .account-type-tab.active{border-color:#b06fd0;background:linear-gradient(135deg,rgba(176,111,208,.08),rgba(128,184,240,.08));box-shadow:0 4px 16px rgba(176,111,208,.15)}
-    .acc-tab-icon{font-size:1.6rem;margin-bottom:4px}
-    .acc-tab-label{font-size:.85rem;font-weight:700;color:#321d47}
-    .acc-tab-desc{font-size:.72rem;color:#7a5a9a;margin-top:2px}
-    .account-type-section{display:none;animation:slideIn .3s ease}
-    .account-type-section.active{display:block}
-    @keyframes slideIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
-    .auth-form{display:none}
-    .auth-form.active{display:block;animation:slideIn .3s ease}
-    .avatar-upload-section{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:rgba(200,170,230,.06);border:2px dashed rgba(176,111,208,.25);border-radius:16px}
-    #avatarUploadArea{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(176,111,208,.15),rgba(128,184,240,.15));border:2px dashed rgba(176,111,208,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0;transition:all .2s}
-    #avatarUploadArea:hover{border-color:#b06fd0}
-    #avatarPlaceholder{display:flex;flex-direction:column;align-items:center;gap:2px}
-    #avatarPlaceholder span:first-child{font-size:1.4rem}
-    #avatarPlaceholder span:last-child{font-size:.55rem;color:#7a5a9a;font-weight:600}
-    #avatarPreview{width:100%;height:100%;object-fit:cover;display:none}
-    .avatar-info h4{font-size:.88rem;font-weight:700;color:#321d47;margin-bottom:2px}
-    .avatar-info p{font-size:.75rem;color:#7a5a9a}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .form-group{margin-bottom:16px}
-    .form-group label{display:block;margin-bottom:6px;color:#4a2e6a;font-weight:700;font-size:.85rem}
-    .form-group label .required{color:#e05a8a;margin-left:2px}
-    .form-group input,.form-group select{width:100%;padding:11px 14px;border:2px solid rgba(200,170,230,.3);border-radius:12px;font-family:'Nunito',sans-serif;font-size:.93rem;background:white;color:#321d47;transition:all .2s;outline:none}
-    .form-group input:focus,.form-group select:focus{border-color:#b06fd0;box-shadow:0 0 0 4px rgba(176,111,208,.08)}
-    .form-group input.error{border-color:#e05a8a}
-    .field-error{font-size:.75rem;color:#e05a8a;margin-top:4px;min-height:16px;display:block}
-    .password-wrapper{position:relative}
-    .password-wrapper input{padding-right:42px}
-    .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#7a5a9a;font-size:1rem;padding:4px;line-height:1}
-    .password-strength{margin-top:6px}
-    .strength-bar-wrap{height:4px;background:rgba(200,170,230,.2);border-radius:4px;overflow:hidden;margin-bottom:3px}
-    #passwordStrengthBar{height:100%;width:0;border-radius:4px;transition:all .3s}
-    #passwordStrengthLabel{font-size:.72rem;font-weight:700}
-    .section-label{font-size:.85rem;font-weight:700;color:#4a2e6a;margin-bottom:10px}
-    .interests-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-    .interest-chip{display:flex;align-items:center;gap:6px;padding:8px 10px;background:white;border:2px solid rgba(200,170,230,.25);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.8rem;font-weight:600;color:#4a2e6a}
-    .interest-chip:hover{border-color:#b06fd0}
-    .interest-chip input[type="checkbox"]{display:none}
-    .interest-chip.selected{border-color:#b06fd0;background:linear-gradient(135deg,rgba(176,111,208,.1),rgba(128,184,240,.1))}
-    .interest-chip .chip-icon{font-size:1rem}
-    .terms-group{margin:16px 0}
-    .checkbox-label{display:flex;align-items:flex-start;gap:10px;font-size:.86rem;color:#4a2e6a;cursor:pointer;line-height:1.4}
-    .checkbox-label input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:#b06fd0;cursor:pointer}
-    .checkbox-label a{color:#b06fd0;text-decoration:none;font-weight:700}
-    .login-options{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .remember-label{display:flex;align-items:center;gap:8px;font-size:.86rem;color:#4a2e6a;cursor:pointer}
-    .remember-label input{accent-color:#b06fd0}
-    .forgot-link{font-size:.86rem;color:#b06fd0;font-weight:700;text-decoration:none;cursor:pointer;background:none;border:none;font-family:inherit}
-    .forgot-link:hover{text-decoration:underline}
-    .submit-btn{width:100%;padding:14px;margin-top:4px;background:linear-gradient(135deg,#b06fd0,#8090e0,#80b8f0);background-size:200% 100%;border:none;border-radius:30px;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;letter-spacing:.5px}
-    .submit-btn:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 10px 28px rgba(176,111,208,.4)}
-    .submit-btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
-    .loading-spinner{display:none;animation:spin .8s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .divider{display:flex;align-items:center;gap:12px;margin:20px 0 16px}
-    .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(200,170,230,.35)}
-    .divider span{font-size:.8rem;color:#7a5a9a;font-weight:600;white-space:nowrap}
-    .social-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .social-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border:2px solid rgba(200,170,230,.3);border-radius:24px;background:white;font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;color:#321d47;cursor:pointer;transition:all .2s}
-    .social-btn:hover{border-color:#b06fd0;transform:translateY(-1px);box-shadow:0 4px 12px rgba(176,111,208,.15)}
-    .social-btn svg{width:18px;height:18px;flex-shrink:0}
-    .switch-form{text-align:center;margin-top:16px;font-size:.86rem;color:#7a5a9a}
-    .switch-form a{color:#b06fd0;font-weight:700;text-decoration:none;cursor:pointer}
-    .toast{position:fixed;bottom:24px;right:24px;min-width:260px;max-width:380px;padding:14px 20px;background:white;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.18);font-family:'Nunito',sans-serif;font-size:.9rem;color:#321d47;display:flex;align-items:center;gap:12px;transform:translateY(100px);opacity:0;transition:all .35s cubic-bezier(.34,1.3,.64,1);border-left:4px solid #b06fd0;z-index:20000}
-    .toast.show{transform:translateY(0);opacity:1}
-    .toast.success{border-left-color:#43a047}
-    .toast.error{border-left-color:#e53935}
-    .toast.warning{border-left-color:#fb8c00}
-    .toast-icon{font-size:1.1rem;flex-shrink:0}
-    .toast-message{flex:1}
-    .toast-close{margin-left:auto;background:none;border:none;color:#7a5a9a;cursor:pointer;font-size:1rem;padding:2px 4px;flex-shrink:0}
-    img.emoji{height:1em;width:1em;vertical-align:-.1em}
-    @media(max-width:600px){
-      .modal-content{padding:24px 18px 20px}
+      .modal-content{padding:22px 16px 20px}
       .form-row{grid-template-columns:1fr;gap:0}
-      .interests-grid{grid-template-columns:repeat(2,1fr)}
       .social-buttons{grid-template-columns:1fr}
-      .account-type-tabs{flex-direction:column;gap:8px}
+      .role-type-tabs{flex-direction:column;gap:8px}
       .toast{bottom:90px;right:12px;left:12px;max-width:none}
     }
   </style>
@@ -279,6 +378,72 @@
       <div class="loader-tagline">online &amp; physical · unified university</div>
     </div>
     <div class="loader-progress-wrap"><div class="loader-progress-bar"></div></div>
+  </div>
+</div>
+
+<!-- ══ HAMBURGER BUTTON (Desktop only) ══════════════════════════════════════ -->
+<button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation menu">
+  <div class="hb-line"></div>
+  <div class="hb-line"></div>
+  <div class="hb-line"></div>
+</button>
+
+<!-- ══ DESKTOP NAV DRAWER ════════════════════════════════════════════════════ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="desktop-nav-drawer" id="desktopDrawer">
+  <div class="drawer-bg"></div>
+  <div class="drawer-inner">
+    <div class="drawer-brand">LEARNOVE</div>
+    <nav class="drawer-nav">
+      <a class="drawer-nav-item active" href="/" onclick="closeDrawer();return true">
+        <span class="nav-icon">⌂</span>
+        <span class="nav-label">Home</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();showModal('signup');return false">
+        <span class="nav-icon">📚</span>
+        <span class="nav-label">Courses</span>
+        <span class="nav-badge">New</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();handleDashboardNav();return false">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();handleProfileNav();return false">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Profile</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();return false">
+        <span class="nav-icon">🎓</span>
+        <span class="nav-label">My Learning</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();return false">
+        <span class="nav-icon">🏆</span>
+        <span class="nav-label">Certificates</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();return false">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Schedule</span>
+      </a>
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();return false">
+        <span class="nav-icon">💬</span>
+        <span class="nav-label">Messages</span>
+        <span class="nav-badge">3</span>
+      </a>
+    </nav>
+    <div class="drawer-bottom">
+      <a class="drawer-nav-item" href="#" onclick="closeDrawer();return false">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </a>
+      <a class="drawer-nav-item" href="#" id="drawerHelpLink" onclick="closeDrawer();return false">
+        <span class="nav-icon">❓</span>
+        <span class="nav-label">Help & Support</span>
+      </a>
+      <a class="drawer-nav-item" id="drawerLogoutItem" onclick="closeDrawer();logout();return false" style="display:none;color:#e53935">
+        <span class="nav-icon">🚪</span>
+        <span class="nav-label">Sign Out</span>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -374,8 +539,31 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"/></svg>
         </div>
       </div>
-      <div class="signup-pill" id="signupPillBtn" role="button" tabindex="0">
-        <span class="signup-pill-text">Sign up ›</span>
+      <!-- Profile pill — changes after login -->
+      <div class="profile-dropdown-wrapper">
+        <div class="signup-pill" id="signupPillBtn" role="button" tabindex="0">
+          <span class="signup-pill-text">Sign up ›</span>
+        </div>
+        <!-- Profile dropdown (shown after login) -->
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="pd-header">
+            <div id="pdAvatarWrap"></div>
+            <div class="pd-info">
+              <div class="pd-name" id="pdName">—</div>
+              <div class="pd-email" id="pdEmail">—</div>
+              <span class="pd-badge" id="pdBadge">User</span>
+            </div>
+          </div>
+          <div class="pd-body">
+            <a class="pd-menu-item" href="/pages/dashboard.html"><span class="pdi">📊</span> My Dashboard</a>
+            <a class="pd-menu-item" href="#" id="pdEditBtn"><span class="pdi">✏️</span> Edit Profile</a>
+            <a class="pd-menu-item" href="#"><span class="pdi">🎓</span> My Courses</a>
+            <a class="pd-menu-item" href="#"><span class="pdi">🏆</span> Certificates</a>
+            <a class="pd-menu-item" href="#"><span class="pdi">⚙️</span> Account Settings</a>
+            <div class="pd-divider"></div>
+            <a class="pd-menu-item pd-signout" href="#" onclick="logout();return false"><span class="pdi">🚪</span> Sign Out</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -398,8 +586,8 @@
 <nav class="mobile-nav">
   <a href="#" class="nav-item active" onclick="setActiveNav(this);return false"><span>⌂</span>Home</a>
   <a href="#" class="nav-item" onclick="setActiveNav(this);return false"><span>📚</span>Courses</a>
-  <a href="#" class="nav-item" onclick="setActiveNav(this);return false"><span>📊</span>Dashboard</a>
-  <a href="#" class="nav-item" onclick="showModal('login');return false"><span>👤</span>Profile</a>
+  <a href="#" class="nav-item" onclick="setActiveNav(this);handleDashboardNav();return false"><span>📊</span>Dashboard</a>
+  <a href="#" class="nav-item" onclick="setActiveNav(this);handleProfileNav();return false"><span>👤</span>Profile</a>
 </nav>
 </div><!-- #main-site -->
 
@@ -419,116 +607,520 @@
       <button class="auth-tab" data-tab="login">Sign In</button>
     </div>
 
-    <!-- SIGNUP FORM -->
+    <!-- ═══ SIGNUP FORM ═══════════════════════════════════════════════════ -->
     <form id="signupForm" class="auth-form active" novalidate style="display:block">
-      <input type="hidden" id="accountTypeInput" value="individual">
-      <div class="account-type-tabs">
-        <div class="account-type-tab active" data-type="individual">
-          <div class="acc-tab-icon">🧑‍💼</div>
-          <div class="acc-tab-label">Individual</div>
-          <div class="acc-tab-desc">Learner or professional</div>
+      <input type="hidden" id="accountTypeInput" value="student">
+
+      <!-- Role selection -->
+      <div class="role-type-tabs">
+        <div class="role-type-tab active" data-role="student" onclick="switchRole('student')">
+          <div class="role-tab-icon">🎓</div>
+          <div class="role-tab-label">Student</div>
+          <div class="role-tab-desc">Enrol & learn</div>
         </div>
-        <div class="account-type-tab" data-type="student">
-          <div class="acc-tab-icon">🎓</div>
-          <div class="acc-tab-label">Student</div>
-          <div class="acc-tab-desc">Enrolled or applying</div>
-        </div>
-      </div>
-      <div class="avatar-upload-section">
-        <div id="avatarUploadArea" role="button" tabindex="0" aria-label="Upload profile photo">
-          <div id="avatarPlaceholder"><span>📷</span><span>Upload</span></div>
-          <img id="avatarPreview" alt="Your photo">
-        </div>
-        <input type="file" id="avatarInput" accept="image/*" style="display:none">
-        <div class="avatar-info">
-          <h4>Profile Photo</h4>
-          <p>Click to upload your photo<br>JPG, PNG · max 2MB</p>
+        <div class="role-type-tab" data-role="instructor" onclick="switchRole('instructor')">
+          <div class="role-tab-icon">👨‍🏫</div>
+          <div class="role-tab-label">Instructor</div>
+          <div class="role-tab-desc">Teach & inspire</div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="signupName">Full Name <span class="required">*</span></label>
-        <input type="text" id="signupName" placeholder="Your full name" autocomplete="name" required>
-        <span class="field-error" id="nameError"></span>
-      </div>
-      <div class="form-group">
-        <label for="signupEmail">Email Address <span class="required">*</span></label>
-        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required>
-        <span class="field-error" id="emailError"></span>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="signupPassword">Password <span class="required">*</span></label>
-          <div class="password-wrapper">
-            <input type="password" id="signupPassword" placeholder="Min. 8 characters" autocomplete="new-password" required>
-            <button type="button" class="pw-toggle" data-target="signupPassword">👁</button>
+
+      <!-- ── STUDENT FLOW ──────────────────────────────────────────────── -->
+      <div id="studentSection" class="role-section active">
+        <!-- Step progress -->
+        <div class="signup-steps" id="studentSteps">
+          <div class="step-item active" data-step="0"><div class="step-circle">1</div><div class="step-label">Personal</div></div>
+          <div class="step-item" data-step="1"><div class="step-circle">2</div><div class="step-label">Contact</div></div>
+          <div class="step-item" data-step="2"><div class="step-circle">3</div><div class="step-label">Academic</div></div>
+          <div class="step-item" data-step="3"><div class="step-circle">4</div><div class="step-label">Security</div></div>
+          <div class="step-item" data-step="4"><div class="step-circle">5</div><div class="step-label">Verify</div></div>
+        </div>
+
+        <!-- Step 1 — Personal Info -->
+        <div class="step-panel active" id="sStep0">
+          <div class="avatar-upload-section">
+            <div id="avatarUploadArea" role="button" tabindex="0">
+              <div id="avatarPlaceholder"><span>📷</span><span>Photo</span></div>
+              <img id="avatarPreview" alt="Your photo">
+            </div>
+            <input type="file" id="avatarInput" accept="image/*" style="display:none">
+            <div class="avatar-info">
+              <h4>Profile Photo <span style="color:#e05a8a">*</span></h4>
+              <p>Required. JPG, PNG · max 2MB<br>Clear face photo only</p>
+            </div>
           </div>
-          <div class="password-strength">
-            <div class="strength-bar-wrap"><div id="passwordStrengthBar"></div></div>
-            <span id="passwordStrengthLabel"></span>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" id="sFirstName" placeholder="First name" autocomplete="given-name" required>
+              <span class="field-error" id="sFirstNameError"></span>
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" id="sLastName" placeholder="Last name" autocomplete="family-name" required>
+              <span class="field-error" id="sLastNameError"></span>
+            </div>
           </div>
-          <span class="field-error" id="passwordError"></span>
-        </div>
-        <div class="form-group">
-          <label for="signupConfirmPassword">Confirm Password <span class="required">*</span></label>
-          <div class="password-wrapper">
-            <input type="password" id="signupConfirmPassword" placeholder="Repeat password" autocomplete="new-password" required>
-            <button type="button" class="pw-toggle" data-target="signupConfirmPassword">👁</button>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date of Birth <span class="required">*</span></label>
+              <input type="date" id="sDob" required>
+              <span class="field-error" id="sDobError"></span>
+            </div>
+            <div class="form-group">
+              <label>Gender <span class="required">*</span></label>
+              <select id="sGender" required>
+                <option value="">Select gender</option>
+                <option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option>
+              </select>
+              <span class="field-error" id="sGenderError"></span>
+            </div>
           </div>
-          <span class="field-error" id="confirmPasswordError"></span>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nationality <span class="required">*</span></label>
+              <select id="sNationality" required><option value="">Select nationality</option></select>
+              <span class="field-error" id="sNationalityError"></span>
+            </div>
+            <div class="form-group">
+              <label>Country of Residence <span class="required">*</span></label>
+              <select id="sCountry" required><option value="">Select country</option></select>
+              <span class="field-error" id="sCountryError"></span>
+            </div>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-next" onclick="studentNextStep(0)">Continue →</button>
+          </div>
         </div>
-      </div>
-      <div class="account-type-section" data-type="student">
-        <div class="form-row">
+
+        <!-- Step 2 — Contact Details -->
+        <div class="step-panel" id="sStep1">
           <div class="form-group">
-            <label for="educationLevel">Education Level</label>
-            <select id="educationLevel">
-              <option value="">Select level</option>
-              <option value="secondary">Secondary School</option>
-              <option value="university">University (Undergraduate)</option>
-              <option value="graduate">Graduate / Postgraduate</option>
-              <option value="other">Other</option>
+            <label>Email Address <span class="required">*</span></label>
+            <input type="email" id="sEmail" placeholder="you@example.com" autocomplete="email" required>
+            <span class="field-error" id="sEmailError"></span>
+          </div>
+          <div class="form-group">
+            <label>Phone Number <span class="required">*</span></label>
+            <div class="phone-wrapper">
+              <select id="sPhoneCode" class="phone-code"><option value="+234">🇳🇬 +234</option></select>
+              <input type="tel" id="sPhone" placeholder="08012345678" style="flex:1">
+            </div>
+            <span class="field-error" id="sPhoneError"></span>
+          </div>
+          <div class="form-group">
+            <label>State / Region <span class="required">*</span></label>
+            <input type="text" id="sState" placeholder="e.g. Rivers State" required>
+            <span class="field-error" id="sStateError"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City <span class="required">*</span></label>
+              <input type="text" id="sCity" placeholder="e.g. Port Harcourt" required>
+              <span class="field-error" id="sCityError"></span>
+            </div>
+            <div class="form-group">
+              <label>Postal / ZIP Code</label>
+              <input type="text" id="sPostalCode" placeholder="Postal code">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Full Address <span class="required">*</span></label>
+            <textarea id="sAddress" placeholder="Street address, house number, area..." required></textarea>
+            <span class="field-error" id="sAddressError"></span>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="studentPrevStep(1)">← Back</button>
+            <button type="button" class="step-btn-next" onclick="studentNextStep(1)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 3 — Academic Info -->
+        <div class="step-panel" id="sStep2">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Education Level <span class="required">*</span></label>
+              <select id="sEducationLevel" required>
+                <option value="">Select level</option>
+                <option value="secondary">Secondary School</option>
+                <option value="university">University (Undergraduate)</option>
+                <option value="graduate">Graduate / Postgraduate</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="field-error" id="sEduError"></span>
+            </div>
+            <div class="form-group">
+              <label>Expected Graduation</label>
+              <select id="sGraduationYear"><option value="">Select year</option></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Current Institution / School <span class="required">*</span></label>
+            <input type="text" id="sInstitution" placeholder="University of Port Harcourt" required>
+            <span class="field-error" id="sInstitutionError"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Field of Study / Major <span class="required">*</span></label>
+              <input type="text" id="sMajor" placeholder="Computer Science" required>
+              <span class="field-error" id="sMajorError"></span>
+            </div>
+            <div class="form-group">
+              <label>Student ID (if enrolled)</label>
+              <input type="text" id="sStudentId" placeholder="e.g. STU/2024/001">
+            </div>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="studentPrevStep(2)">← Back</button>
+            <button type="button" class="step-btn-next" onclick="studentNextStep(2)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 4 — Security (Password + ID) -->
+        <div class="step-panel" id="sStep3">
+          <div class="form-group">
+            <label>Password <span class="required">*</span></label>
+            <div class="password-wrapper">
+              <input type="password" id="signupPassword" placeholder="Min. 8 chars with symbols" autocomplete="new-password" required>
+              <button type="button" class="pw-toggle" data-target="signupPassword">👁</button>
+            </div>
+            <div class="password-strength">
+              <div class="strength-bar-wrap"><div id="passwordStrengthBar"></div></div>
+              <span id="passwordStrengthLabel"></span>
+            </div>
+            <span class="field-error" id="passwordError"></span>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password <span class="required">*</span></label>
+            <div class="password-wrapper">
+              <input type="password" id="signupConfirmPassword" placeholder="Repeat password" autocomplete="new-password" required>
+              <button type="button" class="pw-toggle" data-target="signupConfirmPassword">👁</button>
+            </div>
+            <span class="field-error" id="confirmPasswordError"></span>
+          </div>
+          <div class="form-group">
+            <label>Government ID Type <span class="required">*</span></label>
+            <div class="id-types">
+              <div class="id-type-chip" onclick="selectIdType(this,'passport')">🛂 Passport</div>
+              <div class="id-type-chip" onclick="selectIdType(this,'national_id')">🪪 National ID</div>
+              <div class="id-type-chip" onclick="selectIdType(this,'drivers_license')">🚗 Driver's License</div>
+              <div class="id-type-chip" onclick="selectIdType(this,'voters_card')">🗳️ Voter's Card</div>
+            </div>
+            <input type="hidden" id="sIdType">
+            <span class="field-error" id="sIdTypeError"></span>
+          </div>
+          <div class="form-group">
+            <label>ID Number <span class="required">*</span></label>
+            <input type="text" id="sIdNumber" placeholder="Enter your ID number" required>
+            <span class="field-error" id="sIdNumberError"></span>
+          </div>
+          <div class="form-group">
+            <label>Upload ID Document <span class="required">*</span></label>
+            <div class="id-upload-area" id="idUploadArea" onclick="document.getElementById('idFileInput').click()">
+              <span class="upload-icon">📄</span>
+              <p>Click to upload a clear photo of your ID<br><strong>JPG, PNG, PDF</strong> · max 5MB</p>
+              <div class="file-name" id="idFileName"></div>
+            </div>
+            <input type="file" id="idFileInput" accept="image/*,.pdf" style="display:none">
+            <span class="field-error" id="sIdFileError"></span>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="studentPrevStep(3)">← Back</button>
+            <button type="button" class="step-btn-next" onclick="studentNextStep(3)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 5 — Terms & Submit -->
+        <div class="step-panel" id="sStep4">
+          <div class="info-notice">
+            <span class="notice-icon">ℹ️</span>
+            <span>Please review the information you've provided. Once your account is created, personal details can only be edited <strong>once</strong> for security reasons. Make sure everything is correct.</span>
+          </div>
+          <div class="form-group">
+            <label>Security Question <span class="required">*</span></label>
+            <select id="sSecurityQuestion" required>
+              <option value="">Choose a question</option>
+              <option>What was your first pet's name?</option>
+              <option>What is your mother's maiden name?</option>
+              <option>What city were you born in?</option>
+              <option>What was the name of your first school?</option>
+              <option>What is your oldest sibling's middle name?</option>
             </select>
+            <span class="field-error" id="sSecQError"></span>
           </div>
           <div class="form-group">
-            <label for="graduationYear">Expected Graduation</label>
-            <select id="graduationYear"><option value="">Select year</option></select>
+            <label>Security Answer <span class="required">*</span></label>
+            <input type="text" id="sSecurityAnswer" placeholder="Your answer (case-sensitive)" required>
+            <span class="field-error" id="sSecAnsError"></span>
+          </div>
+          <div class="terms-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="termsAgree" required>
+              <span>I agree to Learnove's <a href="/pages/terms.html" target="_blank">Terms of Service</a> and <a href="/pages/privacy.html" target="_blank">Privacy Policy</a></span>
+            </label>
+          </div>
+          <div class="terms-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="ageConfirm" required>
+              <span>I confirm that I am at least <strong>13 years old</strong> and the information provided is accurate</span>
+            </label>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="studentPrevStep(4)">← Back</button>
+            <button type="submit" class="step-btn-next" id="signupSubmit">
+              <span class="btn-text">Create My Account 🎓</span>
+              <span class="loading-spinner">⟳</span>
+            </button>
           </div>
         </div>
-        <div class="form-row">
+      </div><!-- /studentSection -->
+
+      <!-- ── INSTRUCTOR FLOW ───────────────────────────────────────────── -->
+      <div id="instructorSection" class="role-section">
+        <div class="warning-notice">
+          <span class="notice-icon">🔒</span>
+          <span>Instructor accounts require an <strong>official access token</strong> issued by Learnove administration. If you haven't received one, please contact us at <strong>instructors@learnove.com</strong></span>
+        </div>
+
+        <!-- Instructor Step progress -->
+        <div class="signup-steps" id="instructorSteps">
+          <div class="step-item active" data-step="0"><div class="step-circle">1</div><div class="step-label">Token</div></div>
+          <div class="step-item" data-step="1"><div class="step-circle">2</div><div class="step-label">Personal</div></div>
+          <div class="step-item" data-step="2"><div class="step-circle">3</div><div class="step-label">Credentials</div></div>
+          <div class="step-item" data-step="3"><div class="step-circle">4</div><div class="step-label">Security</div></div>
+        </div>
+
+        <!-- Instructor Step 1 — Token Verification -->
+        <div class="step-panel active" id="iStep0">
+          <div class="instructor-token-box">
+            <h4>🔐 Instructor Access Token</h4>
+            <p>Enter the unique 16-character token issued to you by Learnove administration. This token is personal, non-transferable, and can only be used once. Do not share it with anyone.</p>
+            <div class="token-input-wrapper">
+              <input type="password" id="iAccessToken" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off">
+              <button type="button" class="token-visibility-btn" onclick="toggleTokenVisibility()">👁</button>
+            </div>
+            <span class="field-error" id="iTokenError"></span>
+          </div>
           <div class="form-group">
-            <label for="institution">Institution / School</label>
-            <input type="text" id="institution" placeholder="University of Lagos">
+            <label>Your Role / Designation <span class="required">*</span></label>
+            <select id="iDesignation" required>
+              <option value="">Select your role</option>
+              <option value="professor">Professor</option>
+              <option value="associate_professor">Associate Professor</option>
+              <option value="senior_lecturer">Senior Lecturer</option>
+              <option value="lecturer">Lecturer</option>
+              <option value="assistant_lecturer">Assistant Lecturer</option>
+              <option value="teaching_assistant">Teaching Assistant</option>
+              <option value="industry_expert">Industry Expert</option>
+              <option value="guest_instructor">Guest Instructor</option>
+            </select>
+            <span class="field-error" id="iDesignationError"></span>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-next" onclick="instructorNextStep(0)">Verify Token →</button>
+          </div>
+        </div>
+
+        <!-- Instructor Step 2 — Personal & Professional Info -->
+        <div class="step-panel" id="iStep1">
+          <div class="avatar-upload-section">
+            <div id="iAvatarUploadArea" role="button" tabindex="0" onclick="document.getElementById('iAvatarInput').click()">
+              <div id="iAvatarPlaceholder" style="display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:1.3rem">📷</span><span style="font-size:.55rem;color:#7a5a9a;font-weight:600">Photo</span></div>
+              <img id="iAvatarPreview" alt="Instructor photo" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:50%">
+            </div>
+            <input type="file" id="iAvatarInput" accept="image/*" style="display:none">
+            <div class="avatar-info">
+              <h4>Professional Photo <span style="color:#e05a8a">*</span></h4>
+              <p>Clear, professional headshot<br>JPG, PNG · max 2MB</p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Title</label>
+              <select id="iTitle">
+                <option value="">Select</option>
+                <option>Prof.</option><option>Dr.</option><option>Mr.</option><option>Mrs.</option><option>Ms.</option><option>Eng.</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" id="iFirstName" placeholder="First name" required>
+              <span class="field-error" id="iFirstNameError"></span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" id="iLastName" placeholder="Last name" required>
+              <span class="field-error" id="iLastNameError"></span>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth <span class="required">*</span></label>
+              <input type="date" id="iDob" required>
+              <span class="field-error" id="iDobError"></span>
+            </div>
           </div>
           <div class="form-group">
-            <label for="major">Field of Study / Major</label>
-            <input type="text" id="major" placeholder="Computer Science">
+            <label>Institutional Email <span class="required">*</span></label>
+            <input type="email" id="iEmail" placeholder="you@university.edu" autocomplete="email" required>
+            <span class="field-error" id="iEmailError"></span>
+          </div>
+          <div class="form-group">
+            <label>Phone Number <span class="required">*</span></label>
+            <div class="phone-wrapper">
+              <select id="iPhoneCode" class="phone-code"><option value="+234">🇳🇬 +234</option></select>
+              <input type="tel" id="iPhone" placeholder="08012345678" style="flex:1">
+            </div>
+            <span class="field-error" id="iPhoneError"></span>
+          </div>
+          <div class="form-group">
+            <label>Department / Faculty <span class="required">*</span></label>
+            <input type="text" id="iDepartment" placeholder="e.g. Faculty of Engineering" required>
+            <span class="field-error" id="iDepartmentError"></span>
+          </div>
+          <div class="form-group">
+            <label>Subjects / Courses You'll Teach <span class="required">*</span></label>
+            <textarea id="iSubjects" placeholder="e.g. Mathematics, Physics, Computer Science..." required></textarea>
+            <span class="field-error" id="iSubjectsError"></span>
+          </div>
+          <div class="form-group">
+            <label>Years of Teaching Experience <span class="required">*</span></label>
+            <select id="iExperience" required>
+              <option value="">Select</option>
+              <option value="0-2">0–2 years</option>
+              <option value="3-5">3–5 years</option>
+              <option value="6-10">6–10 years</option>
+              <option value="11-20">11–20 years</option>
+              <option value="20+">20+ years</option>
+            </select>
+            <span class="field-error" id="iExperienceError"></span>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="instructorPrevStep(1)">← Back</button>
+            <button type="button" class="step-btn-next" onclick="instructorNextStep(1)">Continue →</button>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="section-label">Interests <span style="font-weight:400;color:#7a5a9a;font-size:0.78rem">(select all that apply)</span></div>
-        <div class="interests-grid">
-          <label class="interest-chip"><input type="checkbox" name="interests" value="programming"><span class="chip-icon">💻</span> Programming</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="science"><span class="chip-icon">🔬</span> Science</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="business"><span class="chip-icon">📊</span> Business</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="arts"><span class="chip-icon">🎨</span> Arts</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="languages"><span class="chip-icon">🌍</span> Languages</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="engineering"><span class="chip-icon">⚙️</span> Engineering</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="medicine"><span class="chip-icon">🩺</span> Medicine</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="law"><span class="chip-icon">⚖️</span> Law</label>
-          <label class="interest-chip"><input type="checkbox" name="interests" value="design"><span class="chip-icon">✏️</span> Design</label>
+
+        <!-- Instructor Step 3 — Academic Credentials -->
+        <div class="step-panel" id="iStep2">
+          <div class="form-group">
+            <label>Highest Qualification <span class="required">*</span></label>
+            <select id="iQualification" required>
+              <option value="">Select</option>
+              <option>PhD / Doctorate</option>
+              <option>Master's Degree</option>
+              <option>Bachelor's Degree</option>
+              <option>Professional Certification</option>
+              <option>Other</option>
+            </select>
+            <span class="field-error" id="iQualificationError"></span>
+          </div>
+          <div class="form-group">
+            <label>Issuing Institution <span class="required">*</span></label>
+            <input type="text" id="iQualInstitution" placeholder="University / College name" required>
+            <span class="field-error" id="iQualInstitutionError"></span>
+          </div>
+          <div class="form-group">
+            <label>NIN / National Identity Number <span class="required">*</span></label>
+            <input type="text" id="iNin" placeholder="Enter your NIN" required>
+            <span class="field-error" id="iNinError"></span>
+          </div>
+          <div class="form-group">
+            <label>Upload Degree / Certificate <span class="required">*</span></label>
+            <div class="id-upload-area" id="iCertUploadArea" onclick="document.getElementById('iCertInput').click()">
+              <span class="upload-icon">🎓</span>
+              <p>Upload highest academic certificate<br><strong>JPG, PNG, PDF</strong> · max 10MB</p>
+              <div class="file-name" id="iCertFileName"></div>
+            </div>
+            <input type="file" id="iCertInput" accept="image/*,.pdf" style="display:none">
+            <span class="field-error" id="iCertError"></span>
+          </div>
+          <div class="form-group">
+            <label>Upload Government-Issued ID <span class="required">*</span></label>
+            <div class="id-upload-area" id="iIdUploadArea" onclick="document.getElementById('iIdInput').click()">
+              <span class="upload-icon">🪪</span>
+              <p>Passport, National ID, or Driver's License<br><strong>JPG, PNG</strong> · max 5MB</p>
+              <div class="file-name" id="iIdFileName"></div>
+            </div>
+            <input type="file" id="iIdInput" accept="image/*,.pdf" style="display:none">
+            <span class="field-error" id="iIdError"></span>
+          </div>
+          <div class="form-group">
+            <label>Brief Professional Bio <span class="required">*</span></label>
+            <textarea id="iBio" placeholder="Tell students about your background and expertise..." style="height:85px" required></textarea>
+            <span class="field-error" id="iBioError"></span>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="instructorPrevStep(2)">← Back</button>
+            <button type="button" class="step-btn-next" onclick="instructorNextStep(2)">Continue →</button>
+          </div>
         </div>
-      </div>
-      <div class="terms-group">
-        <label class="checkbox-label">
-          <input type="checkbox" id="termsAgree" required>
-          <span>I agree to Learnove's <a href="/pages/terms.html" target="_blank">Terms of Service</a> and <a href="/pages/privacy.html" target="_blank">Privacy Policy</a></span>
-        </label>
-      </div>
-      <button type="submit" class="submit-btn" id="signupSubmit">
-        <span class="btn-text">Create My Account</span>
-        <span class="loading-spinner">⟳</span>
-      </button>
+
+        <!-- Instructor Step 4 — Security & Submit -->
+        <div class="step-panel" id="iStep3">
+          <div class="form-group">
+            <label>Password <span class="required">*</span></label>
+            <div class="password-wrapper">
+              <input type="password" id="iPassword" placeholder="Min. 8 chars, mixed symbols" autocomplete="new-password" required>
+              <button type="button" class="pw-toggle" data-target="iPassword">👁</button>
+            </div>
+            <div class="password-strength">
+              <div class="strength-bar-wrap"><div id="iPasswordStrengthBar"></div></div>
+              <span id="iPasswordStrengthLabel"></span>
+            </div>
+            <span class="field-error" id="iPasswordError"></span>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password <span class="required">*</span></label>
+            <div class="password-wrapper">
+              <input type="password" id="iConfirmPassword" placeholder="Repeat password" autocomplete="new-password" required>
+              <button type="button" class="pw-toggle" data-target="iConfirmPassword">👁</button>
+            </div>
+            <span class="field-error" id="iConfirmPasswordError"></span>
+          </div>
+          <div class="form-group">
+            <label>Security Question <span class="required">*</span></label>
+            <select id="iSecurityQuestion" required>
+              <option value="">Choose a question</option>
+              <option>What was your first pet's name?</option>
+              <option>What is your mother's maiden name?</option>
+              <option>What city were you born in?</option>
+              <option>What was the name of your first school?</option>
+            </select>
+            <span class="field-error" id="iSecQError"></span>
+          </div>
+          <div class="form-group">
+            <label>Security Answer <span class="required">*</span></label>
+            <input type="text" id="iSecurityAnswer" placeholder="Your answer" required>
+            <span class="field-error" id="iSecAnsError"></span>
+          </div>
+          <div class="info-notice">
+            <span class="notice-icon">⏳</span>
+            <span>Your instructor account will be reviewed by Learnove administration. You'll receive an email notification once approved. Account activation typically takes <strong>1–3 business days</strong>.</span>
+          </div>
+          <div class="terms-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="iTermsAgree" required>
+              <span>I agree to Learnove's <a href="/pages/terms.html" target="_blank">Terms of Service</a>, <a href="/pages/privacy.html" target="_blank">Privacy Policy</a>, and <a href="/pages/instructor-agreement.html" target="_blank">Instructor Agreement</a></span>
+            </label>
+          </div>
+          <div class="terms-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="iAccuracyConfirm" required>
+              <span>I certify that all information and documents provided are genuine and accurate</span>
+            </label>
+          </div>
+          <div class="step-nav-btns">
+            <button type="button" class="step-btn-back" onclick="instructorPrevStep(3)">← Back</button>
+            <button type="submit" class="step-btn-next" id="instructorSubmit">
+              <span class="btn-text">Submit Application 👨‍🏫</span>
+              <span class="loading-spinner">⟳</span>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /instructorSection -->
+
       <div class="divider"><span>or continue with</span></div>
       <div class="social-buttons">
         <button type="button" class="social-btn" onclick="socialLogin('google')">
@@ -543,7 +1135,7 @@
       <div class="switch-form">Already have an account? <a onclick="switchAuthTab('login')">Sign in</a></div>
     </form>
 
-    <!-- LOGIN FORM -->
+    <!-- ═══ LOGIN FORM ════════════════════════════════════════════════════ -->
     <form id="loginForm" class="auth-form" novalidate style="display:none">
       <div class="form-group">
         <label for="loginEmail">Email Address</label>
@@ -580,12 +1172,12 @@
       <div class="switch-form">Don't have an account? <a onclick="switchAuthTab('signup')">Create one free</a></div>
     </form>
 
-    <!-- FORGOT PASSWORD FORM -->
+    <!-- ═══ FORGOT PASSWORD FORM ══════════════════════════════════════════ -->
     <form id="forgotPasswordForm" class="auth-form" novalidate style="display:none">
       <div style="text-align:center;margin-bottom:20px;">
         <div style="font-size:2.5rem;margin-bottom:8px;">🔐</div>
         <h3 style="color:#321d47;font-size:1.1rem;margin-bottom:6px;">Forgot your password?</h3>
-        <p style="color:#7a5a9a;font-size:0.88rem;">Enter your email and we'll send you a secure reset link.</p>
+        <p style="color:#7a5a9a;font-size:.85rem;">Enter your email and we'll send you a secure reset link.</p>
       </div>
       <div class="form-group">
         <label for="forgotEmail">Email Address</label>
@@ -607,9 +1199,10 @@
   <button class="toast-close" onclick="document.getElementById('toast').classList.remove('show')">✕</button>
 </div>
 
-<!-- Loader script (inline, no module needed) -->
+<!-- ══ INLINE SCRIPTS ════════════════════════════════════════════════════════ -->
 <script>
 (function() {
+  // ── Loader particles ──────────────────────────────────────────────────────
   const el = document.getElementById('loaderParticles');
   const colors = ['#e8c0f8','#c0d8f8','#f8d0e8','#d0c8f8','#c8e8f8','#f0c8d8'];
   for (let i = 0; i < 24; i++) {
@@ -619,88 +1212,451 @@
     el.appendChild(p);
   }
 
+  // ── Hamburger / Drawer ────────────────────────────────────────────────────
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const desktopDrawer = document.getElementById('desktopDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+
+  window.closeDrawer = function() {
+    hamburgerBtn.classList.remove('open');
+    desktopDrawer.classList.remove('open');
+    drawerOverlay.classList.remove('open');
+  };
+
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = desktopDrawer.classList.contains('open');
+    if (isOpen) {
+      closeDrawer();
+    } else {
+      hamburgerBtn.classList.add('open');
+      desktopDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+    }
+  });
+
+  drawerOverlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // ── Profile dropdown ──────────────────────────────────────────────────────
+  const pillBtn = document.getElementById('signupPillBtn');
+  const profileDropdown = document.getElementById('profileDropdown');
+
+  pillBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // If user is logged in, toggle dropdown; otherwise open signup modal
+    if (pillBtn.dataset.loggedIn === 'true') {
+      profileDropdown.classList.toggle('open');
+    } else {
+      window.showModal && window.showModal('signup');
+    }
+  });
+
+  document.addEventListener('click', () => {
+    profileDropdown.classList.remove('open');
+  });
+  profileDropdown.addEventListener('click', e => e.stopPropagation());
+
+  // ── Nav helpers ───────────────────────────────────────────────────────────
+  window.handleDashboardNav = function() {
+    const loggedIn = document.getElementById('signupPillBtn').dataset.loggedIn === 'true';
+    if (loggedIn) window.location.href = '/pages/dashboard.html';
+    else { window.showModal && window.showModal('login'); }
+  };
+  window.handleProfileNav = function() {
+    const loggedIn = document.getElementById('signupPillBtn').dataset.loggedIn === 'true';
+    if (loggedIn) profileDropdown.classList.toggle('open');
+    else { window.showModal && window.showModal('login'); }
+  };
+
+  // ── Role switching ────────────────────────────────────────────────────────
+  window.switchRole = function(role) {
+    document.querySelectorAll('.role-type-tab').forEach(t => t.classList.toggle('active', t.dataset.role === role));
+    document.getElementById('studentSection').classList.toggle('active', role === 'student');
+    document.getElementById('instructorSection').classList.toggle('active', role === 'instructor');
+    document.getElementById('accountTypeInput').value = role;
+  };
+
+  // ── Student step navigation ───────────────────────────────────────────────
+  let sCurrentStep = 0;
+  const sTotalSteps = 5;
+
+  function sSetStep(n) {
+    document.querySelectorAll('#studentSection .step-panel').forEach((p, i) => {
+      p.classList.toggle('active', i === n);
+    });
+    document.querySelectorAll('#studentSteps .step-item').forEach((item, i) => {
+      item.classList.remove('active','done');
+      if (i < n) item.classList.add('done');
+      if (i === n) item.classList.add('active');
+    });
+    sCurrentStep = n;
+  }
+
+  function sValidateStep(n) {
+    let ok = true;
+    const se = (id, msg) => { const el = document.getElementById(id); if(el) el.textContent = msg; ok = false; };
+    const ce = (id) => { const el = document.getElementById(id); if(el) el.textContent = ''; };
+
+    if (n === 0) {
+      ce('sFirstNameError'); ce('sLastNameError'); ce('sDobError'); ce('sGenderError'); ce('sNationalityError'); ce('sCountryError');
+      if (!document.getElementById('sFirstName').value.trim()) se('sFirstNameError','First name is required');
+      if (!document.getElementById('sLastName').value.trim()) se('sLastNameError','Last name is required');
+      const dob = document.getElementById('sDob').value;
+      if (!dob) { se('sDobError','Date of birth is required'); }
+      else {
+        const age = Math.floor((Date.now() - new Date(dob)) / (365.25*24*3600*1000));
+        if (age < 13) se('sDobError','You must be at least 13 years old');
+        if (age > 120) se('sDobError','Invalid date of birth');
+      }
+      if (!document.getElementById('sGender').value) se('sGenderError','Please select gender');
+      if (!document.getElementById('sNationality').value) se('sNationalityError','Please select nationality');
+      if (!document.getElementById('sCountry').value) se('sCountryError','Please select country');
+      // Avatar required
+      if (!window._avatarBase64) { showToast('Please upload a profile photo','warning'); ok = false; }
+    }
+    if (n === 1) {
+      ce('sEmailError'); ce('sPhoneError'); ce('sStateError'); ce('sCityError'); ce('sAddressError');
+      const email = document.getElementById('sEmail').value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) se('sEmailError','Valid email is required');
+      if (!document.getElementById('sPhone').value.trim()) se('sPhoneError','Phone number is required');
+      if (!document.getElementById('sState').value.trim()) se('sStateError','State/Region is required');
+      if (!document.getElementById('sCity').value.trim()) se('sCityError','City is required');
+      if (!document.getElementById('sAddress').value.trim()) se('sAddressError','Address is required');
+    }
+    if (n === 2) {
+      ce('sEduError'); ce('sInstitutionError'); ce('sMajorError');
+      if (!document.getElementById('sEducationLevel').value) se('sEduError','Education level is required');
+      if (!document.getElementById('sInstitution').value.trim()) se('sInstitutionError','Institution is required');
+      if (!document.getElementById('sMajor').value.trim()) se('sMajorError','Field of study is required');
+    }
+    if (n === 3) {
+      ce('passwordError'); ce('confirmPasswordError'); ce('sIdTypeError'); ce('sIdNumberError'); ce('sIdFileError');
+      const pw = document.getElementById('signupPassword').value;
+      const cpw = document.getElementById('signupConfirmPassword').value;
+      if (pw.length < 8) se('passwordError','At least 8 characters required');
+      else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/.test(pw)) se('passwordError','Must include uppercase, lowercase, number & symbol');
+      if (pw !== cpw) se('confirmPasswordError','Passwords do not match');
+      if (!document.getElementById('sIdType').value) se('sIdTypeError','Please select an ID type');
+      if (!document.getElementById('sIdNumber').value.trim()) se('sIdNumberError','ID number is required');
+      if (!window._idFileBase64) se('sIdFileError','Please upload your ID document');
+    }
+    if (n === 4) {
+      ce('sSecQError'); ce('sSecAnsError');
+      if (!document.getElementById('sSecurityQuestion').value) se('sSecQError','Please select a security question');
+      if (!document.getElementById('sSecurityAnswer').value.trim()) se('sSecAnsError','Security answer is required');
+      if (!document.getElementById('termsAgree').checked) { showToast('Please agree to Terms & Privacy Policy','warning'); ok = false; }
+      if (!document.getElementById('ageConfirm').checked) { showToast('Please confirm your age and information accuracy','warning'); ok = false; }
+    }
+    return ok;
+  }
+
+  window.studentNextStep = function(current) {
+    if (!sValidateStep(current)) return;
+    if (current < sTotalSteps - 1) sSetStep(current + 1);
+  };
+  window.studentPrevStep = function(current) {
+    if (current > 0) sSetStep(current - 1);
+  };
+
+  // ── Instructor step navigation ────────────────────────────────────────────
+  let iCurrentStep = 0;
+  const iTotalSteps = 4;
+
+  function iSetStep(n) {
+    document.querySelectorAll('#instructorSection .step-panel').forEach((p, i) => {
+      p.classList.toggle('active', i === n);
+    });
+    document.querySelectorAll('#instructorSteps .step-item').forEach((item, i) => {
+      item.classList.remove('active','done');
+      if (i < n) item.classList.add('done');
+      if (i === n) item.classList.add('active');
+    });
+    iCurrentStep = n;
+  }
+
+  function iValidateStep(n) {
+    let ok = true;
+    const se = (id, msg) => { const el = document.getElementById(id); if(el) el.textContent = msg; ok = false; };
+    const ce = (id) => { const el = document.getElementById(id); if(el) el.textContent = ''; };
+
+    if (n === 0) {
+      ce('iTokenError'); ce('iDesignationError');
+      const token = document.getElementById('iAccessToken').value.trim();
+      if (!token || token.length < 16) se('iTokenError','Please enter a valid access token');
+      // Token format: XXXX-XXXX-XXXX-XXXX
+      if (token && !/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/i.test(token.replace(/\s/g,''))) {
+        se('iTokenError','Token format should be XXXX-XXXX-XXXX-XXXX');
+      }
+      if (!document.getElementById('iDesignation').value) se('iDesignationError','Please select your role');
+    }
+    if (n === 1) {
+      ce('iFirstNameError'); ce('iLastNameError'); ce('iDobError'); ce('iEmailError'); ce('iPhoneError'); ce('iDepartmentError'); ce('iSubjectsError'); ce('iExperienceError');
+      if (!document.getElementById('iFirstName').value.trim()) se('iFirstNameError','First name is required');
+      if (!document.getElementById('iLastName').value.trim()) se('iLastNameError','Last name is required');
+      const dob = document.getElementById('iDob').value;
+      if (!dob) se('iDobError','Date of birth required');
+      else {
+        const age = Math.floor((Date.now() - new Date(dob)) / (365.25*24*3600*1000));
+        if (age < 21) se('iDobError','Instructor must be at least 21 years old');
+      }
+      const email = document.getElementById('iEmail').value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) se('iEmailError','Valid email required');
+      if (!document.getElementById('iPhone').value.trim()) se('iPhoneError','Phone number required');
+      if (!document.getElementById('iDepartment').value.trim()) se('iDepartmentError','Department required');
+      if (!document.getElementById('iSubjects').value.trim()) se('iSubjectsError','Please list subjects you will teach');
+      if (!document.getElementById('iExperience').value) se('iExperienceError','Please select experience level');
+      if (!window._iAvatarBase64) { showToast('Please upload a professional photo','warning'); ok = false; }
+    }
+    if (n === 2) {
+      ce('iQualificationError'); ce('iQualInstitutionError'); ce('iNinError'); ce('iCertError'); ce('iIdError'); ce('iBioError');
+      if (!document.getElementById('iQualification').value) se('iQualificationError','Qualification required');
+      if (!document.getElementById('iQualInstitution').value.trim()) se('iQualInstitutionError','Issuing institution required');
+      if (!document.getElementById('iNin').value.trim()) se('iNinError','NIN is required');
+      if (!window._iCertBase64) se('iCertError','Please upload your academic certificate');
+      if (!window._iIdBase64) se('iIdError','Please upload your government-issued ID');
+      if (!document.getElementById('iBio').value.trim()) se('iBioError','Professional bio required');
+    }
+    if (n === 3) {
+      ce('iPasswordError'); ce('iConfirmPasswordError'); ce('iSecQError'); ce('iSecAnsError');
+      const pw = document.getElementById('iPassword').value;
+      const cpw = document.getElementById('iConfirmPassword').value;
+      if (pw.length < 8) se('iPasswordError','At least 8 characters required');
+      else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/.test(pw)) se('iPasswordError','Must include uppercase, lowercase, number & symbol');
+      if (pw !== cpw) se('iConfirmPasswordError','Passwords do not match');
+      if (!document.getElementById('iSecurityQuestion').value) se('iSecQError','Please select a security question');
+      if (!document.getElementById('iSecurityAnswer').value.trim()) se('iSecAnsError','Security answer is required');
+      if (!document.getElementById('iTermsAgree').checked) { showToast('Please agree to Terms & Instructor Agreement','warning'); ok = false; }
+      if (!document.getElementById('iAccuracyConfirm').checked) { showToast('Please confirm accuracy of information','warning'); ok = false; }
+    }
+    return ok;
+  }
+
+  window.instructorNextStep = function(current) {
+    if (!iValidateStep(current)) return;
+    if (current < iTotalSteps - 1) iSetStep(current + 1);
+  };
+  window.instructorPrevStep = function(current) {
+    if (current > 0) iSetStep(current - 1);
+  };
+
+  // ── Token visibility ──────────────────────────────────────────────────────
+  window.toggleTokenVisibility = function() {
+    const inp = document.getElementById('iAccessToken');
+    inp.type = inp.type === 'text' ? 'password' : 'text';
+  };
+
+  // Token auto-format XXXX-XXXX-XXXX-XXXX
+  document.getElementById('iAccessToken').addEventListener('input', function() {
+    let v = this.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+    if (v.length > 16) v = v.slice(0,16);
+    const parts = v.match(/.{1,4}/g) || [];
+    this.value = parts.join('-');
+  });
+
+  // ── ID type selection ─────────────────────────────────────────────────────
+  window.selectIdType = function(el, type) {
+    document.querySelectorAll('.id-type-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('sIdType').value = type;
+  };
+
+  // ── File uploads ──────────────────────────────────────────────────────────
+  window._avatarBase64 = null;
+  window._idFileBase64 = null;
+  window._iAvatarBase64 = null;
+  window._iCertBase64 = null;
+  window._iIdBase64 = null;
+
+  function setupFileUpload(inputId, previewId, placeholderId, storageKey, maxMb, accept) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!accept.some(a => file.type.startsWith(a) || (a === '.pdf' && file.type === 'application/pdf'))) {
+        showToast('Invalid file type','error'); return;
+      }
+      if (file.size > maxMb * 1024 * 1024) { showToast(`File must be under ${maxMb}MB`,'error'); return; }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        window[storageKey] = ev.target.result;
+        const preview = document.getElementById(previewId);
+        const placeholder = document.getElementById(placeholderId);
+        if (preview && preview.tagName === 'IMG') {
+          preview.src = ev.target.result; preview.style.display = 'block';
+          if (placeholder) placeholder.style.display = 'none';
+        }
+        if (inputId === 'idFileInput') { const fn = document.getElementById('idFileName'); if(fn) fn.textContent = '✅ ' + file.name; }
+        if (inputId === 'iCertInput') { const fn = document.getElementById('iCertFileName'); if(fn) fn.textContent = '✅ ' + file.name; }
+        if (inputId === 'iIdInput') { const fn = document.getElementById('iIdFileName'); if(fn) fn.textContent = '✅ ' + file.name; }
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  setupFileUpload('avatarInput','avatarPreview','avatarPlaceholder','_avatarBase64',2,['image/']);
+  setupFileUpload('idFileInput','idFileName','idFileName','_idFileBase64',5,['image/','.pdf']);
+  setupFileUpload('iAvatarInput','iAvatarPreview','iAvatarPlaceholder','_iAvatarBase64',2,['image/']);
+  setupFileUpload('iCertInput','iCertFileName','iCertFileName','_iCertBase64',10,['image/','.pdf']);
+  setupFileUpload('iIdInput','iIdFileName','iIdFileName','_iIdBase64',5,['image/','.pdf']);
+
+  document.getElementById('avatarUploadArea').addEventListener('click', () => document.getElementById('avatarInput').click());
+
+  // ── Password strength ──────────────────────────────────────────────────────
+  function initStrength(inputId, barId, labelId) {
+    const input = document.getElementById(inputId);
+    const bar = document.getElementById(barId);
+    const label = document.getElementById(labelId);
+    if (!input || !bar) return;
+    input.addEventListener('input', () => {
+      const val = input.value;
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[a-z]/.test(val)) score++;
+      if (/\d/.test(val)) score++;
+      if (/[^a-zA-Z0-9]/.test(val)) score++;
+      const levels = [
+        {color:'#f44336',text:'Very weak',width:'20%'},
+        {color:'#ff7043',text:'Weak',width:'40%'},
+        {color:'#ffa726',text:'Fair',width:'60%'},
+        {color:'#66bb6a',text:'Strong',width:'80%'},
+        {color:'#43a047',text:'Very strong',width:'100%'}
+      ];
+      const lvl = levels[Math.max(0, score-1)] || levels[0];
+      bar.style.width = val ? lvl.width : '0%';
+      bar.style.background = lvl.color;
+      if (label) { label.textContent = val ? lvl.text : ''; label.style.color = lvl.color; }
+    });
+  }
+  initStrength('signupPassword','passwordStrengthBar','passwordStrengthLabel');
+  initStrength('iPassword','iPasswordStrengthBar','iPasswordStrengthLabel');
+
+  // ── PW confirm live validation ────────────────────────────────────────────
+  document.getElementById('signupConfirmPassword')?.addEventListener('input', function() {
+    const pw = document.getElementById('signupPassword')?.value;
+    const el = document.getElementById('confirmPasswordError');
+    if (el) el.textContent = this.value && pw !== this.value ? 'Passwords do not match' : '';
+  });
+  document.getElementById('iConfirmPassword')?.addEventListener('input', function() {
+    const pw = document.getElementById('iPassword')?.value;
+    const el = document.getElementById('iConfirmPasswordError');
+    if (el) el.textContent = this.value && pw !== this.value ? 'Passwords do not match' : '';
+  });
+
+  // ── PW toggle buttons ─────────────────────────────────────────────────────
+  document.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.target);
+      if (!input) return;
+      input.type = input.type === 'text' ? 'password' : 'text';
+      btn.textContent = input.type === 'text' ? '🙈' : '👁';
+    });
+  });
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  window.showToast = function(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    const icons = {success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
+    toast.querySelector('.toast-icon').textContent = icons[type] || 'ℹ️';
+    toast.querySelector('.toast-message').textContent = message;
+    toast.className = `toast ${type} show`;
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 4500);
+  };
+
+  // ── Mobile nav ────────────────────────────────────────────────────────────
+  window.setActiveNav = function(el) {
+    document.querySelectorAll('.mobile-nav .nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  };
+
+  // ── Loader to main ────────────────────────────────────────────────────────
   setTimeout(() => {
     const loader = document.getElementById('loader');
-    const main   = document.getElementById('main-site');
+    const main = document.getElementById('main-site');
     loader.classList.add('fade-out');
     setTimeout(() => { main.classList.add('visible'); }, 300);
     setTimeout(() => {
       loader.style.display = 'none';
       initMainSite();
-      const action = new URLSearchParams(window.location.search).get('action');
-      if (action === 'login')  window.showModal && window.showModal('login');
-      if (action === 'signup') window.showModal && window.showModal('signup');
     }, 900);
   }, 5000);
 
   function initMainSite() {
     // Graduation year dropdown
-    const sel = document.getElementById('graduationYear');
+    const sel = document.getElementById('sGraduationYear');
     if (sel) {
       const yr = new Date().getFullYear();
       for (let y = yr; y <= yr + 8; y++) {
         const opt = document.createElement('option');
-        opt.value = y; opt.textContent = y;
-        sel.appendChild(opt);
+        opt.value = y; opt.textContent = y; sel.appendChild(opt);
       }
     }
+
+    // Country/Nationality dropdowns
+    const countries = ['Afghanistan','Albania','Algeria','Andorra','Angola','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahrain','Bangladesh','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Congo','Costa Rica','Croatia','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominican Republic','Ecuador','Egypt','El Salvador','Estonia','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Guatemala','Guinea','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Ivory Coast','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Mauritania','Mauritius','Mexico','Moldova','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palestine','Panama','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saudi Arabia','Senegal','Serbia','Sierra Leone','Singapore','Slovakia','Slovenia','Somalia','South Africa','South Korea','South Sudan','Spain','Sri Lanka','Sudan','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Togo','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'];
+    ['sNationality','sCountry'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      countries.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c; el.appendChild(opt);
+      });
+    });
+
+    // Phone codes
+    const phoneCodes = ['+1 (US)','+7 (RU)','+20 (EG)','+27 (ZA)','+30 (GR)','+31 (NL)','+33 (FR)','+34 (ES)','+36 (HU)','+39 (IT)','+44 (UK)','+49 (DE)','+55 (BR)','+61 (AU)','+62 (ID)','+63 (PH)','+65 (SG)','+66 (TH)','+81 (JP)','+82 (KR)','+86 (CN)','+91 (IN)','+92 (PK)','+94 (LK)','+212 (MA)','+213 (DZ)','+216 (TN)','+218 (LY)','+220 (GM)','+221 (SN)','+223 (ML)','+225 (CI)','+227 (NE)','+228 (TG)','+229 (BJ)','+231 (LR)','+233 (GH)','+234 (NG)','+235 (TD)','+236 (CF)','+237 (CM)','+241 (GA)','+242 (CG)','+243 (CD)','+244 (AO)','+245 (GW)','+249 (SD)','+250 (RW)','+251 (ET)','+252 (SO)','+253 (DJ)','+254 (KE)','+255 (TZ)','+256 (UG)','+257 (BI)','+258 (MZ)','+260 (ZM)','+263 (ZW)','+966 (SA)','+971 (AE)','+972 (IL)','+973 (BH)','+974 (QA)','+975 (BT)','+977 (NP)'];
+    ['sPhoneCode','iPhoneCode'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = '';
+      phoneCodes.forEach(code => {
+        const opt = document.createElement('option');
+        const match = code.match(/(\+\d+)/);
+        opt.value = match ? match[1] : code;
+        opt.textContent = code;
+        if (code.includes('+234')) opt.selected = true;
+        el.appendChild(opt);
+      });
+    });
+
     // Donut chart animation
     (function() {
       const circum = 2 * Math.PI * 36, pct = 70;
       setTimeout(() => {
         let c = 0;
-        const step = () => { if (c < pct) { c++; document.getElementById('engPct').textContent = c + '%'; requestAnimationFrame(step); } };
+        const step = () => { if (c < pct) { c++; document.getElementById('engPct').textContent = c+'%'; requestAnimationFrame(step); } };
         requestAnimationFrame(step);
         const pLen = circum * 0.70, tLen = circum * 0.15, gap = circum * 0.05;
         document.getElementById('arcPurple').style.strokeDasharray = `${pLen} ${circum - pLen}`;
-        document.getElementById('arcTeal').style.strokeDasharray   = `${tLen} ${circum - tLen}`;
-        document.getElementById('arcTeal').style.strokeDashoffset  = `${-(pLen + gap)}`;
+        document.getElementById('arcTeal').style.strokeDasharray = `${tLen} ${circum - tLen}`;
+        document.getElementById('arcTeal').style.strokeDashoffset = `${-(pLen + gap)}`;
       }, 300);
     })();
+
     // Gauge animation
     (function() {
       const target = 24, ratio = 0.68, arcTotal = 200;
       setTimeout(() => {
-        document.getElementById('gaugeNeedle').style.transform = `rotate(${-100 + ratio * 180}deg)`;
-        document.getElementById('gaugeFill').style.strokeDasharray = `${arcTotal * ratio} ${arcTotal}`;
+        document.getElementById('gaugeNeedle').style.transform = `rotate(${-100 + ratio*180}deg)`;
+        document.getElementById('gaugeFill').style.strokeDasharray = `${arcTotal*ratio} ${arcTotal}`;
         let c = 0;
         const step = () => { if (c < target) { c++; document.getElementById('gaugeVal').textContent = c; requestAnimationFrame(step); } };
         requestAnimationFrame(step);
       }, 400);
     })();
+
     // Course list
     (function() {
       const db = {
-        secondary: [
-          {title:'Mathematics (GCSE)',thumb:'📐',level:'ages 14–16',type:'core'},
-          {title:'Physical Sciences',thumb:'⚗️',level:'IGCSE',type:'lab'},
-          {title:'English Literature',thumb:'📖',level:'high school',type:'humanities'},
-          {title:'History (modern)',thumb:'🏛️',level:'secondary',type:'elective'},
-          {title:'Computer literacy',thumb:'💻',level:'foundation',type:'skills'},
-          {title:'French beginner',thumb:'🇫🇷',level:'A2',type:'language'},
-          {title:'Art & design',thumb:'🎨',level:'GCSE',type:'creative'}
-        ],
-        university: [
-          {title:'BSc Computer Science',thumb:'⌨️',level:'undergrad',type:'STEM'},
-          {title:'Business Administration',thumb:'📊',level:'BBA',type:'management'},
-          {title:'Medicine (pre-clinical)',thumb:'🩺',level:'year 1-2',type:'health'},
-          {title:'Psychology 101',thumb:'🧠',level:'intro',type:'social'},
-          {title:'Engineering mathematics',thumb:'⚙️',level:'bachelor',type:'engineering'},
-          {title:'International Law',thumb:'⚖️',level:'LLB',type:'law'},
-          {title:'Economics (micro)',thumb:'📈',level:'core',type:'economics'}
-        ],
-        skill: [
-          {title:'Web development bootcamp',thumb:'🌐',level:'beginner',type:'tech'},
-          {title:'Data analysis with Python',thumb:'🐍',level:'intermediate',type:'data'},
-          {title:'Graphic design',thumb:'🖌️',level:'Canva/Adobe',type:'creative'},
-          {title:'Digital marketing',thumb:'📱',level:'SEO/SEM',type:'business'},
-          {title:'Public speaking',thumb:'🎤',level:'confidence',type:'soft skill'},
-          {title:'Photography basics',thumb:'📸',level:'beginner',type:'art'},
-          {title:'Project management',thumb:'📋',level:'PMP prep',type:'certification'}
-        ]
+        secondary:[{title:'Mathematics (GCSE)',thumb:'📐',level:'ages 14–16',type:'core'},{title:'Physical Sciences',thumb:'⚗️',level:'IGCSE',type:'lab'},{title:'English Literature',thumb:'📖',level:'high school',type:'humanities'},{title:'History (modern)',thumb:'🏛️',level:'secondary',type:'elective'},{title:'Computer literacy',thumb:'💻',level:'foundation',type:'skills'},{title:'French beginner',thumb:'🇫🇷',level:'A2',type:'language'},{title:'Art & design',thumb:'🎨',level:'GCSE',type:'creative'}],
+        university:[{title:'BSc Computer Science',thumb:'⌨️',level:'undergrad',type:'STEM'},{title:'Business Administration',thumb:'📊',level:'BBA',type:'management'},{title:'Medicine (pre-clinical)',thumb:'🩺',level:'year 1-2',type:'health'},{title:'Psychology 101',thumb:'🧠',level:'intro',type:'social'},{title:'Engineering mathematics',thumb:'⚙️',level:'bachelor',type:'engineering'},{title:'International Law',thumb:'⚖️',level:'LLB',type:'law'},{title:'Economics (micro)',thumb:'📈',level:'core',type:'economics'}],
+        skill:[{title:'Web development bootcamp',thumb:'🌐',level:'beginner',type:'tech'},{title:'Data analysis with Python',thumb:'🐍',level:'intermediate',type:'data'},{title:'Graphic design',thumb:'🖌️',level:'Canva/Adobe',type:'creative'},{title:'Digital marketing',thumb:'📱',level:'SEO/SEM',type:'business'},{title:'Public speaking',thumb:'🎤',level:'confidence',type:'soft skill'},{title:'Photography basics',thumb:'📸',level:'beginner',type:'art'},{title:'Project management',thumb:'📋',level:'PMP prep',type:'certification'}]
       };
       let activeTab = 'secondary';
-      const tabs   = document.querySelectorAll('.course-tab');
+      const tabs = document.querySelectorAll('.course-tab');
       const listEl = document.getElementById('courseListContainer');
       const srchEl = document.getElementById('courseSearchInput');
       function render() {
@@ -719,18 +1675,13 @@
       render();
     })();
   }
-
-  window.setActiveNav = function(el) {
-    document.querySelectorAll('.mobile-nav .nav-item').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
-  };
 })();
 </script>
 
-<!-- Auth module — loads auth.js which initialises Supabase -->
+<!-- Auth module -->
 <script type="module" src="js/auth.js"></script>
 
-<!-- Twemoji for consistent emoji rendering -->
+<!-- Twemoji -->
 <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <script>
 function renderEmojis(t=document.body){twemoji.parse(t,{folder:'svg',ext:'.svg'})}
