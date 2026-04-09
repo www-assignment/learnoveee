@@ -134,16 +134,35 @@ function hideModal() {
 }
 
 function switchAuthTab(tab) {
+  // Only toggle visible auth-tab buttons for signup/login
   document.querySelectorAll('.auth-tab').forEach(t => {
     t.classList.toggle('active', t.dataset.tab === tab);
   });
-  ['signupForm', 'loginForm', 'forgotPasswordForm'].forEach(id => {
+
+  // Map tab name → form ID
+  const formMap = {
+    signup: 'signupForm',
+    login:  'loginForm',
+    forgot: 'forgotPasswordForm'
+  };
+
+  // Hide all forms, then show the matching one
+  Object.values(formMap).forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    const matches = id === `${tab}Form`;
-    el.classList.toggle('active', matches);
-    el.style.display = matches ? 'block' : 'none';
+    el.classList.remove('active');
+    el.style.display = 'none';
   });
+
+  const activeFormId = formMap[tab];
+  if (activeFormId) {
+    const activeForm = document.getElementById(activeFormId);
+    if (activeForm) {
+      activeForm.classList.add('active');
+      activeForm.style.display = 'block';
+    }
+  }
+
   const titles = { signup: 'Join Learnove', login: 'Welcome Back', forgot: 'Reset Password' };
   const titleEl = document.getElementById('modalTitle');
   if (titleEl) titleEl.textContent = titles[tab] || 'Learnove';
